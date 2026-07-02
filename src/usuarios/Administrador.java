@@ -1,4 +1,4 @@
-package proyecto;
+package usuarios;
 
 public class Administrador extends Usuario{
 

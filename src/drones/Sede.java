@@ -1,5 +1,5 @@
 
-package proyecto;
+package drones;
 
 public class Sede {
     protected String codigo, nombre, ciudad;

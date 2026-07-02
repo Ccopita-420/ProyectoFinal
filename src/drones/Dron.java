@@ -1,4 +1,4 @@
-package proyecto;
+package drones;
 
 public abstract class Dron {
     protected String codigo, modelo, estado, tipo;

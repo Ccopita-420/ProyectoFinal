@@ -1,4 +1,4 @@
-package proyecto;
+package drones;
 
 public class DronVigilancia extends Dron {
     protected String campoVision;

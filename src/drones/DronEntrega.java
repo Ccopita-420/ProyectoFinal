@@ -1,4 +1,4 @@
-package proyecto;
+package drones;
 
 public class DronEntrega extends Dron {
 

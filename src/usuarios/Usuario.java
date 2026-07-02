@@ -1,4 +1,4 @@
-package proyecto;
+package usuarios;
 
 public abstract class Usuario implements Autenticable {
     protected String dni, nombres, apellidos, username, password, rol;
