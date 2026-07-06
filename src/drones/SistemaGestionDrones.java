@@ -25,6 +25,27 @@ public class SistemaGestionDrones {
         return false; 
     }
     
+    public boolean eliminarUsuario(String username) {
+        for (int i = 0; i < contUsuarios; i++) {
+            if (usuarios[i].getUsername().equalsIgnoreCase(username)) {
+                for (int j = i; j < contUsuarios - 1; j++) {
+                usuarios[j] = usuarios[j + 1];
+            }
+                usuarios[contUsuarios - 1] = null;
+                contUsuarios--;
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public Usuario[] getUsuarios() {
+        return this.usuarios;
+    }
+    public int getContUsuarios() {
+        return this.contUsuarios;
+    }
+    
     public static void main(String[] args) {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         

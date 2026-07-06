@@ -99,7 +99,6 @@ public class VentanaLogin extends javax.swing.JFrame {
 
         String user = txtUsuario.getText();
         String pass = new String(txtPassword.getPassword());
-        JOptionPane.showMessageDialog(null, "Intentando ingresar con: " + user);
 
         Usuario u = sistema.buscarUsuarioPorUsername(user);
 
@@ -109,11 +108,19 @@ public class VentanaLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡Bienvenido " + u.getNombres() + "! Rol: " + u.getRol());
 
                 if (u.getRol().equalsIgnoreCase("Administrador")) {
+                    VentanaAdmin principal = new VentanaAdmin(sistema);
+                    principal.setVisible(true);
+                    principal.setLocationRelativeTo(null);
 
                 } else if (u.getRol().equalsIgnoreCase("Supervisor")) {
+                    VentanaSupervisor principal = new VentanaSupervisor();
+                    principal.setVisible(true);
+                    principal.setLocationRelativeTo(null);
 
                 } else if (u.getRol().equalsIgnoreCase("Operador")) {
-
+                    VentanaOperador principal = new VentanaOperador();
+                    principal.setVisible(true);
+                    principal.setLocationRelativeTo(null);
                 }
 
                 this.dispose();
