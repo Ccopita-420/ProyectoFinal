@@ -23,5 +23,36 @@ public class Mision {
             rutas[contRutas] = nuevaRuta;
             contRutas++;
         }
-    }    
+    }
+    public String getCodigo() {
+    return codigo;
+}
+
+public String getEstado() {
+    return estado;
+}
+
+public void setEstado(String estado) {
+    this.estado = estado;
+}
+
+public Dron getDronAsignado() {
+    return dronAsignado;
+}
+
+public Sede getSedeAsignada() {
+    return sedeAsignada;
+}
+
+public String getTipoMision() {
+    return tipoMision;
+}
+
+public String getFecha() {
+    return fecha;
+}
+
+public String getHora() {
+    return hora;
+}
 }

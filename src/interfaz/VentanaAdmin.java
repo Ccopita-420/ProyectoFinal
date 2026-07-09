@@ -250,7 +250,38 @@ public class VentanaAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
-        // TODO add your handling code here:
+        String dni = txtDNI.getText();
+String nombres = txtNombres.getText();
+String apellidos = txtApellidos.getText();
+String usuario = txtUsuario.getText();
+String contraseña = txtContraseña.getText();
+String rol = cmbRol.getSelectedItem().toString();
+
+Usuario nuevo = null;
+
+if (rol.equals("Administrador")) {
+    nuevo = new Administrador(dni, nombres, apellidos, usuario, contraseña);
+} else if (rol.equals("Supervisor")) {
+    nuevo = new Supervisor(dni, nombres, apellidos, usuario, contraseña, rol);
+} else if (rol.equals("Operador")) {
+    nuevo = new Operador(dni, nombres, apellidos, usuario, contraseña, rol);
+}
+
+if (nuevo != null) {
+    sistema.registrarUsuario(nuevo);
+
+    JOptionPane.showMessageDialog(null, "Usuario creado correctamente.");
+
+    txtDNI.setText("");
+    txtNombres.setText("");
+    txtApellidos.setText("");
+    txtUsuario.setText("");
+    txtContraseña.setText("");
+    cmbRol.setSelectedIndex(0);
+
+    llenarComboBoxUsuarios();
+    llenarComboBoxEliminar();
+}// TODO add your handling code here:
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDNIActionPerformed

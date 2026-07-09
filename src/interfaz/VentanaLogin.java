@@ -23,8 +23,16 @@ public class VentanaLogin extends javax.swing.JFrame {
     }
 
     public VentanaLogin() {
-        initComponents();
-    }
+    this.sistema = new SistemaGestionDrones();
+    cargarDatosPrueba();
+    initComponents();
+    setLocationRelativeTo(null);
+}
+    private void cargarDatosPrueba() {
+    sistema.registrarUsuario(
+        new Administrador("11111111", "Carlos", "Mendoza", "admin01", "pasw123")
+    );
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -113,12 +121,12 @@ public class VentanaLogin extends javax.swing.JFrame {
                     principal.setLocationRelativeTo(null);
 
                 } else if (u.getRol().equalsIgnoreCase("Supervisor")) {
-                    VentanaSupervisor principal = new VentanaSupervisor();
+                    VentanaSupervisor principal = new VentanaSupervisor(sistema);
                     principal.setVisible(true);
                     principal.setLocationRelativeTo(null);
 
                 } else if (u.getRol().equalsIgnoreCase("Operador")) {
-                    VentanaOperador principal = new VentanaOperador();
+                    VentanaOperador principal = new VentanaOperador(sistema);
                     principal.setVisible(true);
                     principal.setLocationRelativeTo(null);
                 }

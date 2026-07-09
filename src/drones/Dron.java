@@ -11,6 +11,34 @@ public abstract class Dron {
         this.tipo = tipo;
         this.nivelBateria = nivelBateria;
     }
-    //aaa
+    
     public abstract void mostrarInformacion();
+     public String getCodigo() {
+        return codigo;
+    }
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public double getNivelBateria() {
+        return nivelBateria;
+    }
+
+    public void setNivelBateria(double nivelBateria) {
+        this.nivelBateria = nivelBateria;
+    }
 }
+

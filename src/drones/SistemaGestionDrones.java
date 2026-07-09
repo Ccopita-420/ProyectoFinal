@@ -7,6 +7,8 @@ import java.nio.charset.StandardCharsets;
 public class SistemaGestionDrones {
     private Usuario[] usuarios = new Usuario[100];
     private int contUsuarios = 0;
+    private Mision[] misiones = new Mision[100];
+private int contMisiones = 0;
     
     public Usuario buscarUsuarioPorUsername(String username) {
         for (int i = 0; i < contUsuarios; i++) {
@@ -45,7 +47,60 @@ public class SistemaGestionDrones {
     public int getContUsuarios() {
         return this.contUsuarios;
     }
-    
+    public boolean modificarUsuario(String username, Usuario usuarioModificado) {
+    for (int i = 0; i < contUsuarios; i++) {
+        if (usuarios[i].getUsername().equalsIgnoreCase(username)) {
+            usuarios[i] = usuarioModificado;
+            return true;
+        }
+    }
+    return false;
+}
+
+public boolean crearMision(Mision nuevaMision) {
+    if (contMisiones < misiones.length) {
+        Dron dron = nuevaMision.getDronAsignado();
+
+        if (dron.getEstado().equalsIgnoreCase("Disponible")
+                && dron.getNivelBateria() >= 30) {
+
+            misiones[contMisiones] = nuevaMision;
+            contMisiones++;
+
+            dron.setEstado("En misión");
+            nuevaMision.setEstado("En proceso");
+
+            return true;
+        }
+    }
+    return false;
+}
+
+public Mision buscarMisionPorCodigo(String codigo) {
+    for (int i = 0; i < contMisiones; i++) {
+        if (misiones[i].getCodigo().equalsIgnoreCase(codigo)) {
+            return misiones[i];
+        }
+    }
+    return null;
+}
+
+public boolean finalizarMision(String codigoMision, String nuevoEstadoDron) {
+    Mision mision = buscarMisionPorCodigo(codigoMision);
+
+    if (mision != null) {
+        mision.setEstado("Finalizada");
+
+        if (nuevoEstadoDron.equalsIgnoreCase("Disponible")
+                || nuevoEstadoDron.equalsIgnoreCase("En mantenimiento")
+                || nuevoEstadoDron.equalsIgnoreCase("Batería baja")) {
+
+            mision.getDronAsignado().setEstado(nuevoEstadoDron);
+            return true;
+        }
+    }
+    return false;
+}
     public static void main(String[] args) {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         
@@ -75,7 +130,32 @@ public class SistemaGestionDrones {
                 System.out.println("------------------------------------");
             }
         }
-    
+    System.out.println();
+System.out.println("=== 3. PRUEBA DE MISIONES ===");
+
+SistemaGestionDrones sistema = new SistemaGestionDrones();
+
+Sede sede1 = new Sede("SED-001", "Estadio Nacional", "Lima", 43000);
+
+Mision mision1 = new Mision(
+        "MIS-001",
+        "15/06/2026",
+        "18:00",
+        "Vigilancia aérea",
+        "Pendiente",
+        sede1,
+        inventarioDrones[0]
+);
+
+boolean creada = sistema.crearMision(mision1);
+
+System.out.println("Misión creada: " + creada);
+System.out.println("Estado del dron: " + inventarioDrones[0].getEstado());
+
+boolean finalizada = sistema.finalizarMision("MIS-001", "Disponible");
+
+System.out.println("Misión finalizada: " + finalizada);
+System.out.println("Estado final del dron: " + inventarioDrones[0].getEstado());
     }
 }
 

@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
-
+import drones.*;
 /**
  *
  * @author carlo
@@ -11,13 +11,19 @@ package interfaz;
 public class VentanaOperador extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaOperador.class.getName());
-
+private SistemaGestionDrones sistema;
     /**
      * Creates new form VentanaOperador
      */
-    public VentanaOperador() {
-        initComponents();
-    }
+    public VentanaOperador(SistemaGestionDrones sistema) {
+    this.sistema = sistema;
+    initComponents();
+    setLocationRelativeTo(null);
+}
+
+public VentanaOperador() {
+    this(new SistemaGestionDrones());
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
