@@ -5,6 +5,8 @@ import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 public class SistemaGestionDrones {
+    private Dron[] drones = new Dron[100];
+private int contDrones = 0;
     private Usuario[] usuarios = new Usuario[100];
     private int contUsuarios = 0;
     private Mision[] misiones = new Mision[100];
@@ -100,6 +102,31 @@ public boolean finalizarMision(String codigoMision, String nuevoEstadoDron) {
         }
     }
     return false;
+}
+public boolean registrarDron(Dron nuevo) {
+    if (contDrones < drones.length) {
+        drones[contDrones] = nuevo;
+        contDrones++;
+        return true;
+    }
+    return false;
+}
+
+public Dron[] getDrones() {
+    return drones;
+}
+
+public int getContDrones() {
+    return contDrones;
+}
+
+public Dron buscarDronPorCodigo(String codigo) {
+    for (int i = 0; i < contDrones; i++) {
+        if (drones[i].getCodigo().equalsIgnoreCase(codigo)) {
+            return drones[i];
+        }
+    }
+    return null;
 }
     public static void main(String[] args) {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));

@@ -45,10 +45,13 @@ public VentanaSupervisor() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Gestionar drones");
+        jButton1.addActionListener(this::jButton1ActionPerformed);
 
         jButton2.setText("Gestionar sedes");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
 
         jButton3.setText("Gestionar mantenimientos");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
 
         jButton4.setText("Cerrar sesión");
         jButton4.addActionListener(this::jButton4ActionPerformed);
@@ -99,6 +102,24 @@ VentanaLogin login = new VentanaLogin();
 login.setVisible(true);
 this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+VentanaGestionDrones v = new VentanaGestionDrones(sistema);
+v.setVisible(true);
+v.setLocationRelativeTo(null);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+VentanaGestionSedes v = new VentanaGestionSedes(sistema);
+v.setVisible(true);
+v.setLocationRelativeTo(null);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+VentanaGestionMantenimientos v = new VentanaGestionMantenimientos(sistema);
+v.setVisible(true);
+v.setLocationRelativeTo(null);        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
