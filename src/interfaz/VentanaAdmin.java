@@ -229,6 +229,15 @@ public class VentanaAdmin extends javax.swing.JFrame {
         jTabbedPane1.addTab("Eliminar", jPanel1);
 
         jMenu1.setText("Cerrar sesión");
+        jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu1MenuSelected(evt);
+            }
+        });
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -309,6 +318,13 @@ if (nuevo != null) {
            JOptionPane.showMessageDialog(this, "No hay ningún usuario seleccionado para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
        }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
+VentanaLogin login = new VentanaLogin(sistema);
+login.setVisible(true);
+login.setLocationRelativeTo(null);
+this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenu1MenuSelected
 
     /**
      * @param args the command line arguments
