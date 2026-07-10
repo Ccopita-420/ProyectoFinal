@@ -128,6 +128,33 @@ public Dron buscarDronPorCodigo(String codigo) {
     }
     return null;
 }
+public boolean eliminarDron(String codigo) {
+    for (int i = 0; i < contDrones; i++) {
+        if (drones[i].getCodigo().equalsIgnoreCase(codigo)) {
+
+            for (int j = i; j < contDrones - 1; j++) {
+                drones[j] = drones[j + 1];
+            }
+
+            drones[contDrones - 1] = null;
+            contDrones--;
+            return true;
+        }
+    }
+
+    return false;
+}
+
+public boolean modificarDron(String codigo, Dron dronModificado) {
+    for (int i = 0; i < contDrones; i++) {
+        if (drones[i].getCodigo().equalsIgnoreCase(codigo)) {
+            drones[i] = dronModificado;
+            return true;
+        }
+    }
+
+    return false;
+}
     public static void main(String[] args) {
         System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
         
