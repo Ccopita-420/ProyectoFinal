@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package interfaz;
 import drones.*;
 import usuarios.*;
 import javax.swing.JOptionPane;
-/**
- *
- * @author carlo
- */
+
 public class VentanaSupervisor extends javax.swing.JFrame {
-    
+    private SistemaGestionDrones sistema;
+    private Usuario usuarioLogueado;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaSupervisor.class.getName());
-private SistemaGestionDrones sistema;
-    /**
-     * Creates new form VentanaSupervisor
-     */
+
 public VentanaSupervisor(SistemaGestionDrones sistema) {
     this.sistema = sistema;
     initComponents();
@@ -24,7 +16,8 @@ public VentanaSupervisor(SistemaGestionDrones sistema) {
 }
 
 public VentanaSupervisor() {
-    this(new SistemaGestionDrones());
+    //this(new SistemaGestionDrones());
+    initComponents();
 }
 
     /**

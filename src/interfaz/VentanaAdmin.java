@@ -1,25 +1,29 @@
-
 package interfaz;
+
 import drones.*;
 import javax.swing.JOptionPane;
 import usuarios.*;
+
 public class VentanaAdmin extends javax.swing.JFrame {
+
     private SistemaGestionDrones sistema;
     private Usuario usuarioLogueado;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaAdmin.class.getName());
 
-    public VentanaAdmin(SistemaGestionDrones sistema) {
-        this.sistema= sistema;
+    public VentanaAdmin(SistemaGestionDrones sistema, Usuario usuarioLogueado) {
+        this.sistema = sistema;
+        this.usuarioLogueado = usuarioLogueado;
         initComponents();
         llenarComboBoxUsuarios();
         llenarComboBoxEliminar();
-        
+
     }
+
     public VentanaAdmin() {
-        
+
         initComponents();
     }
-    
+
     private void llenarComboBoxUsuarios() {
         cmbUsuarios.removeAllItems();
         Usuario[] lista = sistema.getUsuarios();
@@ -28,11 +32,11 @@ public class VentanaAdmin extends javax.swing.JFrame {
             if (lista[i] != null) {
                 cmbUsuarios.addItem(lista[i].getUsername());
             }
-            
+
         }
     }
-    
-     private void llenarComboBoxEliminar() {
+
+    private void llenarComboBoxEliminar() {
         cmbUsuarios1.removeAllItems();
         Usuario[] lista = sistema.getUsuarios();
         int total = sistema.getContUsuarios();
@@ -40,7 +44,7 @@ public class VentanaAdmin extends javax.swing.JFrame {
             if (lista[i] != null) {
                 cmbUsuarios1.addItem(lista[i].getUsername());
             }
-            
+
         }
     }
 
@@ -71,10 +75,16 @@ public class VentanaAdmin extends javax.swing.JFrame {
         txtContraseña = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         cmbUsuarios = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        cmbModificar = new javax.swing.JComboBox<>();
+        lblNuevoDato = new javax.swing.JLabel();
+        txtModificar = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        btnModificar = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         cmbUsuarios1 = new javax.swing.JComboBox<>();
         btnEliminar = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
 
@@ -167,32 +177,60 @@ public class VentanaAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel6))
                 .addGap(35, 35, 35)
                 .addComponent(btnCrear)
-                .addContainerGap(58, Short.MAX_VALUE))
+                .addContainerGap(96, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Crear", jPanel2);
 
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DNI", "Nombres", "Apellidos", "Usuario", "Contraseña", "Rol" }));
+        cmbModificar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DNI", "Nombres", "Apellidos", "Usuario", "Contraseña", "Rol" }));
+        cmbModificar.addItemListener(this::cmbModificarItemStateChanged);
+
+        lblNuevoDato.setText("Nuevo DNI:");
+
+        jLabel7.setText("Usuario");
+
+        jLabel8.setText("Modificar");
+
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(this::btnModificarActionPerformed);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(138, 138, 138)
+                .addGap(45, 45, 45)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblNuevoDato)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addGap(32, 32, 32)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnModificar)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cmbUsuarios, 0, 140, Short.MAX_VALUE)
+                        .addComponent(cmbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtModificar)))
                 .addContainerGap(372, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
-                .addComponent(cmbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
                 .addGap(18, 18, 18)
-                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(308, Short.MAX_VALUE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNuevoDato)
+                    .addComponent(txtModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(btnModificar)
+                .addContainerGap(257, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Modificar", jPanel3);
@@ -202,28 +240,31 @@ public class VentanaAdmin extends javax.swing.JFrame {
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(this::btnEliminarActionPerformed);
 
+        jLabel9.setText("Elija un usuario para eliminar");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(66, 66, 66)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
-                        .addComponent(cmbUsuarios1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(133, 133, 133)
+                    .addComponent(jLabel9)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(cmbUsuarios1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEliminar)))
-                .addContainerGap(444, Short.MAX_VALUE))
+                .addContainerGap(432, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(36, 36, 36)
+                .addGap(38, 38, 38)
+                .addComponent(jLabel9)
+                .addGap(18, 18, 18)
                 .addComponent(cmbUsuarios1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(18, 18, 18)
                 .addComponent(btnEliminar)
-                .addContainerGap(281, Short.MAX_VALUE))
+                .addContainerGap(299, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Eliminar", jPanel1);
@@ -250,9 +291,7 @@ public class VentanaAdmin extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 38, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 431, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
@@ -260,37 +299,37 @@ public class VentanaAdmin extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         String dni = txtDNI.getText();
-String nombres = txtNombres.getText();
-String apellidos = txtApellidos.getText();
-String usuario = txtUsuario.getText();
-String contraseña = txtContraseña.getText();
-String rol = cmbRol.getSelectedItem().toString();
+        String nombres = txtNombres.getText();
+        String apellidos = txtApellidos.getText();
+        String usuario = txtUsuario.getText();
+        String contraseña = txtContraseña.getText();
+        String rol = cmbRol.getSelectedItem().toString();
 
-Usuario nuevo = null;
+        Usuario nuevo = null;
 
-if (rol.equals("Administrador")) {
-    nuevo = new Administrador(dni, nombres, apellidos, usuario, contraseña);
-} else if (rol.equals("Supervisor")) {
-    nuevo = new Supervisor(dni, nombres, apellidos, usuario, contraseña, rol);
-} else if (rol.equals("Operador")) {
-    nuevo = new Operador(dni, nombres, apellidos, usuario, contraseña, rol);
-}
+        if (rol.equals("Administrador")) {
+            nuevo = new Administrador(dni, nombres, apellidos, usuario, contraseña);
+        } else if (rol.equals("Supervisor")) {
+            nuevo = new Supervisor(dni, nombres, apellidos, usuario, contraseña);
+        } else if (rol.equals("Operador")) {
+            nuevo = new Operador(dni, nombres, apellidos, usuario, contraseña);
+        }
 
-if (nuevo != null) {
-    sistema.registrarUsuario(nuevo);
+        if (nuevo != null) {
+            sistema.registrarUsuario(nuevo);
 
-    JOptionPane.showMessageDialog(null, "Usuario creado correctamente.");
+            JOptionPane.showMessageDialog(null, "Usuario creado correctamente.");
 
-    txtDNI.setText("");
-    txtNombres.setText("");
-    txtApellidos.setText("");
-    txtUsuario.setText("");
-    txtContraseña.setText("");
-    cmbRol.setSelectedIndex(0);
+            txtDNI.setText("");
+            txtNombres.setText("");
+            txtApellidos.setText("");
+            txtUsuario.setText("");
+            txtContraseña.setText("");
+            cmbRol.setSelectedIndex(0);
 
-    llenarComboBoxUsuarios();
-    llenarComboBoxEliminar();
-}// TODO add your handling code here:
+            llenarComboBoxUsuarios();
+            llenarComboBoxEliminar();
+        }// TODO add your handling code here:
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void txtDNIActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDNIActionPerformed
@@ -310,21 +349,51 @@ if (nuevo != null) {
     }//GEN-LAST:event_cmbUsuarios1ActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-       if (cmbUsuarios1.getSelectedItem() != null) {
-           sistema.eliminarUsuario(cmbUsuarios1.getSelectedItem().toString());
-           JOptionPane.showMessageDialog(this, "Usuario '" + cmbUsuarios1.getSelectedItem().toString() + "' eliminado con éxito.");
-           llenarComboBoxEliminar();
-       } else {
-           JOptionPane.showMessageDialog(this, "No hay ningún usuario seleccionado para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
-       }
+        if (cmbUsuarios1.getSelectedItem() != null) {
+            if (cmbUsuarios1.getSelectedItem().toString().equalsIgnoreCase(usuarioLogueado.getUsername())) {
+                JOptionPane.showMessageDialog(this, "No te puedes eliminar a ti mismo -__-", "Acción denegada", JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            sistema.eliminarUsuario(cmbUsuarios1.getSelectedItem().toString());
+            JOptionPane.showMessageDialog(this, "Usuario '" + cmbUsuarios1.getSelectedItem().toString() + "' eliminado con éxito.");
+            llenarComboBoxEliminar();
+            llenarComboBoxUsuarios();
+        } else {
+            JOptionPane.showMessageDialog(this, "No hay ningún usuario seleccionado para eliminar.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
-VentanaLogin login = new VentanaLogin(sistema);
-login.setVisible(true);
-login.setLocationRelativeTo(null);
-this.dispose();        // TODO add your handling code here:
+        VentanaLogin login = new VentanaLogin(sistema);
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jMenu1MenuSelected
+
+    private void cmbModificarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbModificarItemStateChanged
+        if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
+            String aspectoSeleccionado = cmbModificar.getSelectedItem().toString();
+            if (aspectoSeleccionado.equals("DNI")) {
+                lblNuevoDato.setText("Nuevo DNI:");
+            } else if (aspectoSeleccionado.equals("Nombres")) {
+                lblNuevoDato.setText("Nuevos Nombres:");
+            } else if (aspectoSeleccionado.equals("Apellidos")) {
+                lblNuevoDato.setText("Nuevos Apellidos:");
+            } else if (aspectoSeleccionado.equals("Usuario")) {
+                lblNuevoDato.setText("Nuevo Usuario:");
+            } else if (aspectoSeleccionado.equals("Contraseña")) {
+                lblNuevoDato.setText("Nueva Contraseña:");
+            } else if (aspectoSeleccionado.equals("Rol")) {
+                lblNuevoDato.setText("Nuevo Rol:");
+            } else {
+                lblNuevoDato.setText("Nuevo Dato:");
+            }
+        }
+    }//GEN-LAST:event_cmbModificarItemStateChanged
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -354,16 +423,20 @@ this.dispose();        // TODO add your handling code here:
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnModificar;
+    private javax.swing.JComboBox<String> cmbModificar;
     private javax.swing.JComboBox<String> cmbRol;
     private javax.swing.JComboBox<String> cmbUsuarios;
     private javax.swing.JComboBox<String> cmbUsuarios1;
-    private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
@@ -371,9 +444,11 @@ this.dispose();        // TODO add your handling code here:
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblNuevoDato;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtContraseña;
     private javax.swing.JTextField txtDNI;
+    private javax.swing.JTextField txtModificar;
     private javax.swing.JTextField txtNombres;
     private javax.swing.JTextField txtUsuario;
     // End of variables declaration//GEN-END:variables

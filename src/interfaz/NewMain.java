@@ -12,7 +12,8 @@ public class NewMain {
         SistemaGestionDrones sistema = new SistemaGestionDrones();
 
         sistema.registrarUsuario(new Administrador("12345678", "Pepito", "A", "admin", "123"));
-        sistema.registrarUsuario(new Operador("87654321", "Juan", "Pérez", "operador", "123","xd"));
+        sistema.registrarUsuario(new Operador("87654321", "Juan", "Pérez", "operador", "123"));
+        sistema.registrarUsuario(new Supervisor("43556464", "Lolito", "xd", "supervisor", "123"));
         
         java.awt.EventQueue.invokeLater(() -> new VentanaLogin(sistema).setVisible(true));
     }

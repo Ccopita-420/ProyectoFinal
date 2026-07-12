@@ -116,7 +116,7 @@ public class VentanaLogin extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "¡Bienvenido " + u.getNombres() + "! Rol: " + u.getRol());
 
                 if (u.getRol().equalsIgnoreCase("Administrador")) {
-                    VentanaAdmin principal = new VentanaAdmin(sistema);
+                    VentanaAdmin principal = new VentanaAdmin(sistema, u);
                     principal.setVisible(true);
                     principal.setLocationRelativeTo(null);
 
