@@ -12,6 +12,10 @@ public class SistemaGestionDrones {
     private int contUsuarios = 0;
     private Mision[] misiones = new Mision[100];
     private int contMisiones = 0;
+    private Mantenimiento[] mantenimientos = new Mantenimiento[100];
+    private int contMantenimientos = 0;
+    private Sede[] sedes = new Sede[50];
+    private int contSedes = 0;
 
     public Usuario buscarUsuarioPorUsername(String username) {
         for (int i = 0; i < contUsuarios; i++) {
@@ -122,9 +126,9 @@ public class SistemaGestionDrones {
         return false;
     }
 
-    public boolean registrarDron(Dron nuevo) {
+    public boolean registrarDron(Dron nuevoDron) {
         if (contDrones < drones.length) {
-            drones[contDrones] = nuevo;
+            drones[contDrones] = nuevoDron;
             contDrones++;
             return true;
         }
@@ -165,15 +169,45 @@ public class SistemaGestionDrones {
         return false;
     }
 
-    public boolean modificarDron(String codigo, Dron dronModificado) {
-        for (int i = 0; i < contDrones; i++) {
-            if (drones[i].getCodigo().equalsIgnoreCase(codigo)) {
-                drones[i] = dronModificado;
+    public boolean modificarDron(String codigo, String aspecto, String nuevoValor) {
+        Dron d = buscarDronPorCodigo(codigo);
+        if (d != null) {
+            return d.modificarAtributo(aspecto, nuevoValor);
+        }
+        return false;
+    }
+
+    public boolean registrarMantenimiento(Mantenimiento nuevo) {
+        if (contMantenimientos < mantenimientos.length) {
+
+            Dron dronAfectado = buscarDronPorCodigo(nuevo.getCodigoDron());
+
+            if (dronAfectado != null) {
+                dronAfectado.setEstado("En mantenimiento");
+
+                mantenimientos[contMantenimientos] = nuevo;
+                contMantenimientos++;
                 return true;
             }
         }
-
         return false;
+    }
+
+    public boolean registrarSede(Sede nuevaSede) {
+        if (contSedes < sedes.length) {
+            sedes[contSedes] = nuevaSede;
+            contSedes++;
+            return true;
+        }
+        return false;
+    }
+
+    public Sede[] getSedes() {
+        return sedes;
+    }
+
+    public int getContSedes() {
+        return contSedes;
     }
 
     public static void main(String[] args) {

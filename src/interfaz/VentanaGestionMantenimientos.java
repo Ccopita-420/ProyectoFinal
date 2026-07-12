@@ -3,28 +3,48 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
+
 import drones.*;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author ADDRIAM
  */
 public class VentanaGestionMantenimientos extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGestionMantenimientos.class.getName());
-private SistemaGestionDrones sistema;
+    private SistemaGestionDrones sistema;
+
     /**
      * Creates new form VentanaGestionMantenimientos
      */
     public VentanaGestionMantenimientos(SistemaGestionDrones sistema) {
-    this.sistema = sistema;
-    initComponents();
-    setLocationRelativeTo(null);
-}
+        this.sistema = sistema;
+        initComponents();
+        llenarComboDrones();
+        setLocationRelativeTo(null);
+    }
 
-public VentanaGestionMantenimientos() {
-    this(new SistemaGestionDrones());
-}
+    public VentanaGestionMantenimientos() {
+        this(new SistemaGestionDrones());
+    }
+
+    private void llenarComboDrones() {
+        cmbDronesMantenimiento.removeAllItems();
+        cmbDronesMantenimiento.addItem("Seleccione...");
+
+        Dron[] lista = sistema.getDrones();
+        int total = sistema.getContDrones();
+
+        for (int i = 0; i < total; i++) {
+            if (lista[i] != null) {
+                if (!lista[i].getEstado().equalsIgnoreCase("En mantenimiento")) {
+                    cmbDronesMantenimiento.addItem(lista[i].getCodigo());
+                }
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -35,21 +55,142 @@ public VentanaGestionMantenimientos() {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnRegistrarMantenimiento = new javax.swing.JButton();
+        txtFecha = new javax.swing.JTextField();
+        txtDescripcion = new javax.swing.JTextField();
+        txtResponsable = new javax.swing.JTextField();
+        txtCosto = new javax.swing.JTextField();
+        cmbDronesMantenimiento = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        btnCerrar = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        btnRegistrarMantenimiento.setText("Enviar a Mantenimiento");
+        btnRegistrarMantenimiento.addActionListener(this::btnRegistrarMantenimientoActionPerformed);
+
+        cmbDronesMantenimiento.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel1.setText("Dron");
+
+        jLabel2.setText("Fecha");
+
+        jLabel3.setText("Descripción");
+
+        jLabel4.setText("Responsable");
+
+        jLabel5.setText("Costo");
+
+        btnCerrar.setText("Cerrar");
+        btnCerrar.addActionListener(this::btnCerrarActionPerformed);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(91, 91, 91)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel3)
+                    .addComponent(jLabel4)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtFecha)
+                    .addComponent(txtDescripcion)
+                    .addComponent(txtResponsable)
+                    .addComponent(txtCosto)
+                    .addComponent(cmbDronesMantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(178, 178, 178)
+                        .addComponent(btnRegistrarMantenimiento))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(212, 212, 212)
+                        .addComponent(btnCerrar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(86, 86, 86)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbDronesMantenimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtResponsable, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCosto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(73, 73, 73)
+                .addComponent(btnRegistrarMantenimiento)
+                .addGap(18, 18, 18)
+                .addComponent(btnCerrar)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnRegistrarMantenimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarMantenimientoActionPerformed
+        String fecha = txtFecha.getText().trim();
+        String descripcion = txtDescripcion.getText().trim();
+        String responsable = txtResponsable.getText().trim();
+        Object dronSel = cmbDronesMantenimiento.getSelectedItem();
+
+        if (fecha.isEmpty() || descripcion.isEmpty() || responsable.isEmpty() || dronSel == null || dronSel.toString().equals("Seleccione...")) {
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos de la hoja de servicio.");
+            return;
+        }
+
+        double costo;
+        try {
+            costo = Double.parseDouble(txtCosto.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "El costo debe ser un número decimal válido.", "Error de formato", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Mantenimiento nuevoMant = new Mantenimiento(fecha, descripcion, dronSel.toString(), responsable, costo);
+
+        boolean exito = sistema.registrarMantenimiento(nuevoMant);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "¡Mantenimiento registrado con éxito!\nEl dron afectado cambió su estado a 'En mantenimiento'.");
+
+            txtFecha.setText("");
+            txtDescripcion.setText("");
+            txtResponsable.setText("");
+            txtCosto.setText("");
+            cmbDronesMantenimiento.setSelectedIndex(0);
+            llenarComboDrones();
+        } else {
+            JOptionPane.showMessageDialog(this, "Error: Inventario de mantenimientos lleno o dron no encontrado.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegistrarMantenimientoActionPerformed
+
+    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCerrarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,5 +218,17 @@ public VentanaGestionMantenimientos() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCerrar;
+    private javax.swing.JButton btnRegistrarMantenimiento;
+    private javax.swing.JComboBox<String> cmbDronesMantenimiento;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JTextField txtCosto;
+    private javax.swing.JTextField txtDescripcion;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtResponsable;
     // End of variables declaration//GEN-END:variables
 }

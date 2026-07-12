@@ -15,6 +15,9 @@ public class NewMain {
         sistema.registrarUsuario(new Operador("87654321", "Juan", "Pérez", "operador", "123"));
         sistema.registrarUsuario(new Supervisor("43556464", "Lolito", "xd", "supervisor", "123"));
         
+        sistema.registrarDron(new DronEntrega("DRN-002", "Matrice 300", "Disponible", "Entrega", 80.0, 5, "lol"));
+        sistema.registrarDron(new DronVigilancia("DRN-001", "Phantom 4 Pro", "Disponible", "Vigilancia", 95.5, "360"));
+        
         java.awt.EventQueue.invokeLater(() -> new VentanaLogin(sistema).setVisible(true));
     }
 

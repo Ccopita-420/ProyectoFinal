@@ -3,52 +3,65 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaz;
+
 import drones.*;
 import javax.swing.JOptionPane;
+
 /**
  *
  * @author ADDRIAM
  */
 public class VentanaGestionDrones extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaGestionDrones.class.getName());
-private SistemaGestionDrones sistema;
+    private SistemaGestionDrones sistema;
+
     /**
      * Creates new form VentanaGestionDrones
      */
     public VentanaGestionDrones(SistemaGestionDrones sistema) {
-    this.sistema = sistema;
-    initComponents();
-    actualizarCamposTipo();
-    setLocationRelativeTo(null);
-}
+        this.sistema = sistema;
+        initComponents();
+        cargarComboboxesDrones();
+        actualizarCamposTipo();
+        setLocationRelativeTo(null);
+    }
 
-public VentanaGestionDrones() {
-    this(new SistemaGestionDrones());
-}
-private void actualizarCamposTipo() {
+    public VentanaGestionDrones() {
+        this(new SistemaGestionDrones());
+    }
 
-    String tipoSeleccionado = cmbTipoDron.getSelectedItem().toString();
+    private void actualizarCamposTipo() {
+        String tipoSeleccionado = cmbTipoDron.getSelectedItem().toString();
+        java.awt.CardLayout cl = (java.awt.CardLayout) panelDinamico.getLayout();
+        if (tipoSeleccionado.equals("Vigilancia")) {
+            cl.show(panelDinamico, "panelVigilancia");
+        } else if (tipoSeleccionado.equals("Entrega")) {
+            cl.show(panelDinamico, "panelEntrega");
+        } else if (tipoSeleccionado.equals("Transmisión")) {
+            cl.show(panelDinamico, "panelTransmision");
+            panelDinamico.revalidate();
+            panelDinamico.repaint();
+        }
+    }
 
-    boolean esVigilancia = tipoSeleccionado.equals("Vigilancia");
-    boolean esEntrega = tipoSeleccionado.equals("Entrega");
-    boolean esTransmision = tipoSeleccionado.equals("Transmisión");
+    public void cargarComboboxesDrones() {
 
-    lblCampoVision.setVisible(esVigilancia);
-    cmbCampoVision.setVisible(esVigilancia);
+        cmbDronesModificar.removeAllItems();
+        cmbDronesEliminar.removeAllItems();
 
-    lblCapacidadCarga.setVisible(esEntrega);
-    txtCapacidadCarga.setVisible(esEntrega);
+        Dron[] listaDrones = sistema.getDrones();
+        int total = sistema.getContDrones();
 
-    lblTipoSuministro.setVisible(esEntrega);
-    txtTipoSuministro.setVisible(esEntrega);
+        for (int i = 0; i < total; i++) {
+            if (listaDrones[i] != null) {
+                String cod = listaDrones[i].getCodigo();
+                cmbDronesModificar.addItem(cod);
+                cmbDronesEliminar.addItem(cod);
+            }
+        }
+    }
 
-    lblResolucion.setVisible(esTransmision);
-    txtResolucion.setVisible(esTransmision);
-
-    lblPlataforma.setVisible(esTransmision);
-    txtPlataforma.setVisible(esTransmision);
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,18 +103,10 @@ private void actualizarCamposTipo() {
         jPanel6 = new javax.swing.JPanel();
         jTabbedPane4 = new javax.swing.JTabbedPane();
         panelcrear = new javax.swing.JPanel();
-        lblResolucion = new javax.swing.JLabel();
-        lblPlataforma = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        lblCampoVision = new javax.swing.JLabel();
-        cmbCampoVision = new javax.swing.JComboBox<>();
-        txtCapacidadCarga = new javax.swing.JTextField();
-        txtTipoSuministro = new javax.swing.JTextField();
-        txtResolucion = new javax.swing.JTextField();
-        txtPlataforma = new javax.swing.JTextField();
         txtCodigo = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
         cmbTipoDron = new javax.swing.JComboBox<>();
@@ -111,33 +116,37 @@ private void actualizarCamposTipo() {
         jButton2 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
+        panelDinamico = new javax.swing.JPanel();
+        panelVigilancia = new javax.swing.JPanel();
+        lblCampoVision = new javax.swing.JLabel();
+        cmbCampoVision = new javax.swing.JComboBox<>();
+        panelEntrega = new javax.swing.JPanel();
         lblCapacidadCarga = new javax.swing.JLabel();
+        txtCapacidadCarga = new javax.swing.JTextField();
         lblTipoSuministro = new javax.swing.JLabel();
+        txtTipoSuministro = new javax.swing.JTextField();
+        panelTransmision = new javax.swing.JPanel();
+        lblResolucion = new javax.swing.JLabel();
+        txtResolucion = new javax.swing.JTextField();
+        lblPlataforma = new javax.swing.JLabel();
+        txtPlataforma = new javax.swing.JTextField();
         panelModificar = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        lblCampoVision2 = new javax.swing.JLabel();
-        lblCapacidadCarga2 = new javax.swing.JLabel();
-        lblTipoSuministro2 = new javax.swing.JLabel();
-        lblResolucion2 = new javax.swing.JLabel();
-        lblPlataforma2 = new javax.swing.JLabel();
-        txtCodigo2 = new javax.swing.JTextField();
-        txtModelo2 = new javax.swing.JTextField();
-        cmbTipoDron2 = new javax.swing.JComboBox<>();
-        cmbEstado2 = new javax.swing.JComboBox<>();
-        txtBateria2 = new javax.swing.JTextField();
-        cmbCampoVision2 = new javax.swing.JComboBox<>();
-        txtCapacidadCarga2 = new javax.swing.JTextField();
-        txtTipoSuministro2 = new javax.swing.JTextField();
-        txtResolucion2 = new javax.swing.JTextField();
-        txtPlataforma2 = new javax.swing.JTextField();
+        lblActual = new javax.swing.JLabel();
+        lblCambiar = new javax.swing.JLabel();
         cmbDronesModificar = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         btnGuardarCambios = new javax.swing.JButton();
+        cmbAspectosDron = new javax.swing.JComboBox<>();
+        jLabel21 = new javax.swing.JLabel();
+        lblMostrarActual = new javax.swing.JLabel();
+        txtNuevo = new javax.swing.JTextField();
+        lblConsejo = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
         panelEliminar = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        cmbDronesEliminar = new javax.swing.JComboBox<>();
+        btnEliminarDron = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
 
         Tipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -218,10 +227,6 @@ private void actualizarCamposTipo() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        lblResolucion.setText("Resolución de Cámara");
-
-        lblPlataforma.setText("Plataforma de transmisión");
-
         jLabel3.setText("Modelo");
 
         jLabel4.setText("Tipo de Dron");
@@ -229,11 +234,6 @@ private void actualizarCamposTipo() {
         jLabel5.setText("Estado");
 
         jLabel6.setText("Batería (%)");
-
-        lblCampoVision.setText("Campo de Visión");
-
-        cmbCampoVision.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "360°", "180°" }));
-        cmbCampoVision.addActionListener(this::cmbCampoVisionActionPerformed);
 
         txtCodigo.addActionListener(this::txtCodigoActionPerformed);
 
@@ -252,52 +252,140 @@ private void actualizarCamposTipo() {
 
         jLabel20.setText("GESTIÓN DE DRONES");
 
+        panelDinamico.setLayout(new java.awt.CardLayout());
+
+        lblCampoVision.setText("Campo de Visión");
+
+        cmbCampoVision.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "360°", "180°" }));
+        cmbCampoVision.addActionListener(this::cmbCampoVisionActionPerformed);
+
+        javax.swing.GroupLayout panelVigilanciaLayout = new javax.swing.GroupLayout(panelVigilancia);
+        panelVigilancia.setLayout(panelVigilanciaLayout);
+        panelVigilanciaLayout.setHorizontalGroup(
+            panelVigilanciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVigilanciaLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(lblCampoVision, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 281, Short.MAX_VALUE)
+                .addComponent(cmbCampoVision, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(23, 23, 23))
+        );
+        panelVigilanciaLayout.setVerticalGroup(
+            panelVigilanciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelVigilanciaLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addGroup(panelVigilanciaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCampoVision)
+                    .addComponent(cmbCampoVision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(92, Short.MAX_VALUE))
+        );
+
+        panelDinamico.add(panelVigilancia, "panelVigilancia");
+
         lblCapacidadCarga.setText("Capacidad de carga (kg)");
 
         lblTipoSuministro.setText("Tipo de suministro");
+
+        javax.swing.GroupLayout panelEntregaLayout = new javax.swing.GroupLayout(panelEntrega);
+        panelEntrega.setLayout(panelEntregaLayout);
+        panelEntregaLayout.setHorizontalGroup(
+            panelEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEntregaLayout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addGroup(panelEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblCapacidadCarga)
+                    .addComponent(lblTipoSuministro))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 256, Short.MAX_VALUE)
+                .addGroup(panelEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtCapacidadCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTipoSuministro, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22))
+        );
+        panelEntregaLayout.setVerticalGroup(
+            panelEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelEntregaLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(panelEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCapacidadCarga)
+                    .addComponent(txtCapacidadCarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(25, 25, 25)
+                .addGroup(panelEntregaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblTipoSuministro)
+                    .addComponent(txtTipoSuministro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(48, Short.MAX_VALUE))
+        );
+
+        panelDinamico.add(panelEntrega, "panelEntrega");
+
+        lblResolucion.setText("Resolución de Cámara");
+
+        lblPlataforma.setText("Plataforma de transmisión");
+
+        javax.swing.GroupLayout panelTransmisionLayout = new javax.swing.GroupLayout(panelTransmision);
+        panelTransmision.setLayout(panelTransmisionLayout);
+        panelTransmisionLayout.setHorizontalGroup(
+            panelTransmisionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransmisionLayout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addGroup(panelTransmisionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblResolucion)
+                    .addComponent(lblPlataforma))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
+                .addGroup(panelTransmisionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtPlataforma, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(21, 21, 21))
+        );
+        panelTransmisionLayout.setVerticalGroup(
+            panelTransmisionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTransmisionLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(panelTransmisionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblResolucion))
+                .addGroup(panelTransmisionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTransmisionLayout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(lblPlataforma))
+                    .addGroup(panelTransmisionLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtPlataforma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(53, Short.MAX_VALUE))
+        );
+
+        panelDinamico.add(panelTransmision, "panelTransmision");
 
         javax.swing.GroupLayout panelcrearLayout = new javax.swing.GroupLayout(panelcrear);
         panelcrear.setLayout(panelcrearLayout);
         panelcrearLayout.setHorizontalGroup(
             panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelcrearLayout.createSequentialGroup()
+                .addGap(223, 223, 223)
+                .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel20))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(panelcrearLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(panelDinamico, javax.swing.GroupLayout.PREFERRED_SIZE, 559, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(42, Short.MAX_VALUE))
             .addGroup(panelcrearLayout.createSequentialGroup()
                 .addGap(46, 46, 46)
                 .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelcrearLayout.createSequentialGroup()
-                        .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCampoVision, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblCapacidadCarga)
-                            .addComponent(lblTipoSuministro)
-                            .addComponent(lblResolucion)
-                            .addComponent(lblPlataforma)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbTipoDron, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtBateria, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbCampoVision, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtCapacidadCarga, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTipoSuministro, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtPlataforma, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelcrearLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(186, 186, 186))
-                    .addGroup(panelcrearLayout.createSequentialGroup()
-                        .addGap(197, 197, 197)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelcrearLayout.createSequentialGroup()
-                        .addGap(177, 177, 177)
-                        .addComponent(jLabel20)))
-                .addGap(83, 83, 83))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbTipoDron, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbEstado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBateria, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(63, 63, 63))
         );
         panelcrearLayout.setVerticalGroup(
             panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -324,119 +412,78 @@ private void actualizarCamposTipo() {
                 .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBateria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelcrearLayout.createSequentialGroup()
-                        .addGap(45, 45, 45)
-                        .addComponent(cmbCampoVision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelcrearLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(lblCampoVision)))
-                .addGroup(panelcrearLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panelcrearLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtCapacidadCarga, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(txtTipoSuministro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(31, 31, 31)
-                        .addComponent(txtResolucion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(35, 35, 35)
-                        .addComponent(txtPlataforma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2))
-                    .addGroup(panelcrearLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(lblCapacidadCarga)
-                        .addGap(37, 37, 37)
-                        .addComponent(lblTipoSuministro)
-                        .addGap(38, 38, 38)
-                        .addComponent(lblResolucion)
-                        .addGap(43, 43, 43)
-                        .addComponent(lblPlataforma)))
-                .addGap(85, 85, 85))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(panelDinamico, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jButton1)
+                .addGap(27, 27, 27)
+                .addComponent(jButton2)
+                .addContainerGap(104, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Crear", panelcrear);
 
-        jLabel14.setText("Código");
+        lblActual.setText("Código actual:");
 
-        jLabel15.setText("Modelo");
-
-        jLabel16.setText("Tipo de Dron");
-
-        jLabel17.setText("Estado");
-
-        jLabel18.setText("Batería (%)");
-
-        lblCampoVision2.setText("Campo de Visión");
-
-        lblCapacidadCarga2.setText("Capacidad de carga (kg)");
-
-        lblTipoSuministro2.setText("Tipo de suministro");
-
-        lblResolucion2.setText("Resolución de Cámara");
-
-        lblPlataforma2.setText("Plataforma de transmisión");
-
-        txtCodigo2.addActionListener(this::txtCodigo2ActionPerformed);
-
-        cmbTipoDron2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Vigilancia", "Entrega", "Transmisión" }));
-        cmbTipoDron2.addActionListener(this::cmbTipoDron2ActionPerformed);
-
-        cmbEstado2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Disponible", "En misión", "Mantenimiento", "Batería baja" }));
-
-        cmbCampoVision2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "360°", "180°" }));
-        cmbCampoVision2.addActionListener(this::cmbCampoVision2ActionPerformed);
+        lblCambiar.setText("Nuevo Código:");
 
         cmbDronesModificar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione un dron" }));
+        cmbDronesModificar.addActionListener(this::cmbDronesModificarActionPerformed);
 
         jLabel19.setText("Seleccionar Dron:");
 
         btnGuardarCambios.setText("Guardar cambios");
+        btnGuardarCambios.addActionListener(this::btnGuardarCambiosActionPerformed);
+
+        cmbAspectosDron.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Código" }));
+        cmbAspectosDron.addActionListener(this::cmbAspectosDronActionPerformed);
+
+        jLabel21.setText("Modificar");
+
+        jButton5.setText("Cerrar");
+        jButton5.addActionListener(this::jButton5ActionPerformed);
 
         javax.swing.GroupLayout panelModificarLayout = new javax.swing.GroupLayout(panelModificar);
         panelModificar.setLayout(panelModificarLayout);
         panelModificarLayout.setHorizontalGroup(
             panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
+            .addGroup(panelModificarLayout.createSequentialGroup()
                 .addGap(42, 42, 42)
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPlataforma2)
-                    .addComponent(lblResolucion2)
-                    .addComponent(lblTipoSuministro2)
-                    .addComponent(lblCapacidadCarga2)
-                    .addComponent(lblCampoVision2, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel16)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 230, Short.MAX_VALUE)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                        .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(txtResolucion2)
-                            .addComponent(txtTipoSuministro2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCapacidadCarga2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbCampoVision2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtBateria2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbEstado2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(cmbTipoDron2, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtModelo2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtCodigo2, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panelModificarLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(cmbDronesModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel19)
+                            .addComponent(jLabel21))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbAspectosDron, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbDronesModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(85, 85, 85))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelModificarLayout.createSequentialGroup()
-                        .addComponent(txtPlataforma2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(77, 77, 77))))
+                    .addGroup(panelModificarLayout.createSequentialGroup()
+                        .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lblCambiar, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lblActual, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 114, Short.MAX_VALUE))
+                        .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelModificarLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblMostrarActual)
+                                .addGap(177, 177, 177))
+                            .addGroup(panelModificarLayout.createSequentialGroup()
+                                .addGap(231, 231, 231)
+                                .addComponent(txtNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap(61, Short.MAX_VALUE))))))
             .addGroup(panelModificarLayout.createSequentialGroup()
-                .addGap(232, 232, 232)
-                .addComponent(btnGuardarCambios)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelModificarLayout.createSequentialGroup()
+                        .addGap(217, 217, 217)
+                        .addComponent(btnGuardarCambios))
+                    .addGroup(panelModificarLayout.createSequentialGroup()
+                        .addGap(121, 121, 121)
+                        .addComponent(lblConsejo))
+                    .addGroup(panelModificarLayout.createSequentialGroup()
+                        .addGap(236, 236, 236)
+                        .addComponent(jButton5)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         panelModificarLayout.setVerticalGroup(
             panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,62 +492,65 @@ private void actualizarCamposTipo() {
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbDronesModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel19))
+                .addGap(29, 29, 29)
+                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbAspectosDron, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel21))
                 .addGap(18, 18, 18)
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtCodigo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblActual, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblMostrarActual))
                 .addGap(18, 18, 18)
                 .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtModelo2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel16)
-                    .addComponent(cmbTipoDron2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbEstado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBateria2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCampoVision2)
-                    .addComponent(cmbCampoVision2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCapacidadCarga2)
-                    .addComponent(txtCapacidadCarga2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(30, 30, 30)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTipoSuministro2)
-                    .addComponent(txtTipoSuministro2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblResolucion2)
-                    .addComponent(txtResolucion2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
-                .addGroup(panelModificarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblPlataforma2)
-                    .addComponent(txtPlataforma2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lblCambiar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNuevo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(26, 26, 26)
+                .addComponent(lblConsejo)
+                .addGap(41, 41, 41)
                 .addComponent(btnGuardarCambios)
-                .addGap(40, 40, 40))
+                .addGap(28, 28, 28)
+                .addComponent(jButton5)
+                .addContainerGap(370, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Modificar", panelModificar);
+
+        jLabel14.setText("Seleccionar Dron a Eliminar:");
+
+        cmbDronesEliminar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDronesEliminar.addActionListener(this::cmbDronesEliminarActionPerformed);
+
+        btnEliminarDron.setText("Eliminar Dron");
+        btnEliminarDron.addActionListener(this::btnEliminarDronActionPerformed);
+
+        jButton6.setText("Cerrar");
+        jButton6.addActionListener(this::jButton6ActionPerformed);
 
         javax.swing.GroupLayout panelEliminarLayout = new javax.swing.GroupLayout(panelEliminar);
         panelEliminar.setLayout(panelEliminarLayout);
         panelEliminarLayout.setHorizontalGroup(
             panelEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 631, Short.MAX_VALUE)
+            .addGroup(panelEliminarLayout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(panelEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButton6)
+                    .addComponent(btnEliminarDron)
+                    .addComponent(cmbDronesEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel14))
+                .addContainerGap(423, Short.MAX_VALUE))
         );
         panelEliminarLayout.setVerticalGroup(
             panelEliminarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 826, Short.MAX_VALUE)
+            .addGroup(panelEliminarLayout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addComponent(cmbDronesEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(66, 66, 66)
+                .addComponent(btnEliminarDron)
+                .addGap(18, 18, 18)
+                .addComponent(jButton6)
+                .addContainerGap(488, Short.MAX_VALUE))
         );
 
         jTabbedPane4.addTab("Eliminar", panelEliminar);
@@ -509,15 +559,11 @@ private void actualizarCamposTipo() {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 631, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+            .addComponent(jTabbedPane4)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 861, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jTabbedPane4)
         );
 
         pack();
@@ -528,53 +574,83 @@ private void actualizarCamposTipo() {
     }//GEN-LAST:event_txtCodigoActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-String codigo = txtCodigo.getText();
-String modelo = txtModelo.getText();
-String tipo = cmbTipoDron.getSelectedItem().toString();
-String estado = cmbEstado.getSelectedItem().toString();
+        String codigo = txtCodigo.getText();
+        String modelo = txtModelo.getText();
+        String tipo = cmbTipoDron.getSelectedItem().toString();
+        String estado = cmbEstado.getSelectedItem().toString();
 
-double bateria;
+        if (codigo.isEmpty() || modelo.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, llene el código y modelo.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
 
-try {
-    bateria = Double.parseDouble(txtBateria.getText());
-} catch (NumberFormatException e) {
-    JOptionPane.showMessageDialog(this, "Ingrese un número válido para la batería.");
-    return;
-}
+        double bateria;
 
-Dron nuevo = null;
+        try {
+            bateria = Double.parseDouble(txtBateria.getText().trim());
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número válido para la batería.");
+            return;
+        }
 
-if (tipo.equals("Vigilancia")) {
-    String campoVision = cmbCampoVision.getSelectedItem().toString();
-    nuevo = new DronVigilancia(codigo, modelo, estado, tipo, bateria, campoVision);
+        Dron nuevo = null;
+        try {
 
-} else if (tipo.equals("Entrega")) {
-    double capacidadCarga = Double.parseDouble(txtCapacidadCarga.getText());
-    String tipoSuministro = txtTipoSuministro.getText();
-    nuevo = new DronEntrega(codigo, modelo, estado, tipo, bateria, capacidadCarga, tipoSuministro);
+            if (tipo.equals("Vigilancia")) {
+                String campoVision = cmbCampoVision.getSelectedItem().toString();
+                nuevo = new DronVigilancia(codigo, modelo, estado, tipo, bateria, campoVision);
 
-} else if (tipo.equals("Transmisión")) {
-    String resolucion = txtResolucion.getText();
-    String plataforma = txtPlataforma.getText();
-    nuevo = new DronTransmision(codigo, modelo, estado, tipo, bateria, resolucion, plataforma);
-}
+            } else if (tipo.equals("Entrega")) {
+                double capacidadCarga = Double.parseDouble(txtCapacidadCarga.getText().trim());
+                String tipoSuministro = txtTipoSuministro.getText();
+                if (tipoSuministro.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Especifique el tipo de suministro.");
+                    return;
+                }
+                nuevo = new DronEntrega(codigo, modelo, estado, tipo, bateria, capacidadCarga, tipoSuministro);
 
-if (nuevo != null) {
-    sistema.registrarDron(nuevo);
-    JOptionPane.showMessageDialog(this, "Dron registrado correctamente.");
-}
+            } else if (tipo.equals("Transmisión")) {
+                String resolucion = txtResolucion.getText();
+                String plataforma = txtPlataforma.getText();
+                if (resolucion.isEmpty() || plataforma.isEmpty()) {
+                    JOptionPane.showMessageDialog(this, "Llene los campos de transmisión.");
+                    return;
+                }
+                nuevo = new DronTransmision(codigo, modelo, estado, tipo, bateria, resolucion, plataforma);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La capacidad de carga debe ser un número válido.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (nuevo != null) {
+            boolean exito = sistema.registrarDron(nuevo);
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "¡Dron registrado correctamente!");
+                cargarComboboxesDrones();
+                txtCodigo.setText("");
+                txtModelo.setText("");
+                txtBateria.setText("");
+                txtCapacidadCarga.setText("");
+                txtTipoSuministro.setText("");
+                txtResolucion.setText("");
+                txtPlataforma.setText("");
+            } else {
+                JOptionPane.showMessageDialog(this, "Error: Inventario de drones lleno.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
     }//GEN-LAST:event_jButton1ActionPerformed
+    }
 
     private void cmbCampoVisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCampoVisionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbCampoVisionActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-this.dispose();        // TODO add your handling code here:
+        this.dispose();        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void cmbTipoDronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoDronActionPerformed
-actualizarCamposTipo();        // TODO add your handling code here:
+        actualizarCamposTipo();        // TODO add your handling code here:
     }//GEN-LAST:event_cmbTipoDronActionPerformed
 
     private void txtCodigo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigo1ActionPerformed
@@ -597,17 +673,185 @@ actualizarCamposTipo();        // TODO add your handling code here:
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbCampoVision1ActionPerformed
 
-    private void cmbCampoVision2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbCampoVision2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbCampoVision2ActionPerformed
+    private void cmbDronesModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDronesModificarActionPerformed
+        cmbAspectosDron.removeAllItems();
+        Object seleccionado = cmbDronesModificar.getSelectedItem();
+        if (seleccionado == null) {
+            return;
+        }
+        String codigoSel = seleccionado.toString();
+        Dron d = sistema.buscarDronPorCodigo(codigoSel);
 
-    private void cmbTipoDron2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbTipoDron2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbTipoDron2ActionPerformed
+        if (d != null) {
+            cmbAspectosDron.addItem("Código");
+            cmbAspectosDron.addItem("Modelo");
+            cmbAspectosDron.addItem("Estado");
+            cmbAspectosDron.addItem("Batería (%)");
 
-    private void txtCodigo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigo2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigo2ActionPerformed
+            if (d instanceof DronVigilancia) {
+                cmbAspectosDron.addItem("Campo de Visión");
+            } else if (d instanceof DronEntrega) {
+                cmbAspectosDron.addItem("Capacidad de carga (kg)");
+                cmbAspectosDron.addItem("Tipo de suministro");
+            } else if (d instanceof DronTransmision) {
+                cmbAspectosDron.addItem("Resolución de Cámara");
+                cmbAspectosDron.addItem("Plataforma de transmisión");
+            }
+        }
+    }//GEN-LAST:event_cmbDronesModificarActionPerformed
+
+    private void btnGuardarCambiosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarCambiosActionPerformed
+
+        Object dronSel = cmbDronesModificar.getSelectedItem();
+        Object aspectoSel = cmbAspectosDron.getSelectedItem();
+        String nuevoValor = txtNuevo.getText().trim();
+
+        if (dronSel == null || dronSel.toString().equals("Seleccione...") || aspectoSel == null || nuevoValor.isEmpty()) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos seleccionados.", "Campos incompletos", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String codigoAnterior = dronSel.toString();
+        String aspecto = aspectoSel.toString();
+
+        boolean exito = sistema.modificarDron(codigoAnterior, aspecto, nuevoValor);
+
+        if (exito) {
+            javax.swing.JOptionPane.showMessageDialog(this, "¡Dron modificado con éxito!", "Éxito", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+
+            txtNuevo.setText("");
+
+            if (aspecto.equals("Código")) {
+                cargarComboboxesDrones();
+                cmbDronesModificar.setSelectedItem(nuevoValor);
+            } else {
+                cmbAspectosDronActionPerformed(null);
+            }
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(this, "Error al modificar el atributo.\nVerifique que el formato sea correcto (ej. números en batería o carga).", "Error de formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+
+        }
+    }//GEN-LAST:event_btnGuardarCambiosActionPerformed
+
+    private void cmbAspectosDronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAspectosDronActionPerformed
+        Object dronSel = cmbDronesModificar.getSelectedItem();
+        Object aspectoSel = cmbAspectosDron.getSelectedItem();
+
+        if (dronSel == null || dronSel.toString().equals("Seleccione...") || aspectoSel == null) {
+            lblActual.setText("Dato actual:");
+            lblCambiar.setText("Nuevo dato:");
+            lblMostrarActual.setText("-");
+            return;
+        }
+
+        String codigoDron = dronSel.toString();
+        String aspecto = aspectoSel.toString();
+
+        Dron d = sistema.buscarDronPorCodigo(codigoDron);
+        if (d == null) {
+            return;
+        }
+
+        if (aspecto.equals("Código")) {
+            lblActual.setText("Código actual:");
+            lblCambiar.setText("Nuevo código:");
+            lblMostrarActual.setText(d.getCodigo());
+            lblConsejo.setText("");
+
+        } else if (aspecto.equals("Modelo")) {
+            lblActual.setText("Modelo actual:");
+            lblCambiar.setText("Nuevo modelo:");
+            lblMostrarActual.setText(d.getModelo());
+            lblConsejo.setText("");
+
+        } else if (aspecto.equals("Estado")) {
+            lblActual.setText("Estado actual:");
+            lblCambiar.setText("Nuevo estado:");
+            lblMostrarActual.setText(d.getEstado());
+            lblConsejo.setText("Estados: Disponible, En misión, En mantenimiento, Batería baja");
+
+        } else if (aspecto.equals("Batería (%)")) {
+            lblActual.setText("Batería actual:");
+            lblCambiar.setText("Nueva batería (%):");
+            lblMostrarActual.setText(String.valueOf(d.getNivelBateria()));
+            lblConsejo.setText("La bateria no puede ser mayor a 100%");
+
+        } else if (aspecto.equals("Campo de Visión") && d instanceof DronVigilancia) {
+            lblActual.setText("Campo de visión actual:");
+            lblCambiar.setText("Nuevo campo de visión:");
+            lblMostrarActual.setText(((DronVigilancia) d).getCampoVision());
+            lblConsejo.setText("");
+
+        } else if (aspecto.equals("Capacidad de carga (kg)") && d instanceof DronEntrega) {
+            lblActual.setText("Capacidad actual:");
+            lblCambiar.setText("Nueva capacidad (kg):");
+            lblMostrarActual.setText(String.valueOf(((DronEntrega) d).getCapacidadCarga()));
+            lblConsejo.setText("");
+
+        } else if (aspecto.equals("Tipo de suministro") && d instanceof DronEntrega) {
+            lblActual.setText("Suministro actual:");
+            lblCambiar.setText("Nuevo tipo de suministro:");
+            lblMostrarActual.setText(((DronEntrega) d).getTipoSuministro());
+            lblConsejo.setText("");
+
+        } else if (aspecto.equals("Resolución de Cámara") && d instanceof DronTransmision) {
+            lblActual.setText("Resolución actual:");
+            lblCambiar.setText("Nueva resolución:");
+            lblMostrarActual.setText(((DronTransmision) d).getResolucionCamara());
+            lblConsejo.setText("");
+
+        } else if (aspecto.equals("Plataforma de transmisión") && d instanceof DronTransmision) {
+            lblActual.setText("Plataforma actual:");
+            lblCambiar.setText("Nueva plataforma:");
+            lblMostrarActual.setText(((DronTransmision) d).getPlataformaTransmision());
+            lblConsejo.setText("");
+        }
+    }//GEN-LAST:event_cmbAspectosDronActionPerformed
+
+    private void cmbDronesEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDronesEliminarActionPerformed
+        Object seleccionado = cmbDronesEliminar.getSelectedItem();
+        if (seleccionado == null || seleccionado.toString().equals("Seleccione...")) {
+            return;
+        }
+
+        Dron d = sistema.buscarDronPorCodigo(seleccionado.toString());
+        if (d != null) {
+        }
+    }//GEN-LAST:event_cmbDronesEliminarActionPerformed
+
+    private void btnEliminarDronActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarDronActionPerformed
+        Object seleccionado = cmbDronesEliminar.getSelectedItem();
+
+        if (seleccionado == null || seleccionado.toString().equals("Seleccione...")) {
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un dron válido.", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        String codigo = seleccionado.toString();
+
+        int confirmar = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de que desea eliminar el dron " + codigo + "?\nEsta acción no se puede deshacer.",
+                "Confirmar Eliminación", javax.swing.JOptionPane.YES_NO_OPTION, javax.swing.JOptionPane.WARNING_MESSAGE);
+
+        if (confirmar == javax.swing.JOptionPane.YES_OPTION) {
+            boolean exito = sistema.eliminarDron(codigo);
+
+            if (exito) {
+                javax.swing.JOptionPane.showMessageDialog(this, "El dron fue eliminado del inventario correctamente.");
+                cargarComboboxesDrones();
+            } else {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error: No se pudo eliminar el dron.", "Error", javax.swing.JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnEliminarDronActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+this.dispose();        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -636,34 +880,33 @@ actualizarCamposTipo();        // TODO add your handling code here:
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> Tipo;
+    private javax.swing.JButton btnEliminarDron;
     private javax.swing.JButton btnGuardarCambios;
+    private javax.swing.JComboBox<String> cmbAspectosDron;
     private javax.swing.JComboBox<String> cmbCampoVision;
     private javax.swing.JComboBox<String> cmbCampoVision1;
-    private javax.swing.JComboBox<String> cmbCampoVision2;
+    private javax.swing.JComboBox<String> cmbDronesEliminar;
     private javax.swing.JComboBox<String> cmbDronesModificar;
     private javax.swing.JComboBox<String> cmbEstado;
     private javax.swing.JComboBox<String> cmbEstado1;
-    private javax.swing.JComboBox<String> cmbEstado2;
     private javax.swing.JComboBox<String> cmbTipoDron;
     private javax.swing.JComboBox<String> cmbTipoDron1;
-    private javax.swing.JComboBox<String> cmbTipoDron2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -676,44 +919,41 @@ actualizarCamposTipo();        // TODO add your handling code here:
     private javax.swing.JPanel jPanel6;
     private javax.swing.JTabbedPane jTabbedPane4;
     private javax.swing.JTextField jTextField7;
+    private javax.swing.JLabel lblActual;
+    private javax.swing.JLabel lblCambiar;
     private javax.swing.JLabel lblCampoVision;
     private javax.swing.JLabel lblCampoVision1;
-    private javax.swing.JLabel lblCampoVision2;
     private javax.swing.JLabel lblCapacidadCarga;
     private javax.swing.JLabel lblCapacidadCarga1;
-    private javax.swing.JLabel lblCapacidadCarga2;
+    private javax.swing.JLabel lblConsejo;
+    private javax.swing.JLabel lblMostrarActual;
     private javax.swing.JLabel lblPlataforma;
     private javax.swing.JLabel lblPlataforma1;
-    private javax.swing.JLabel lblPlataforma2;
     private javax.swing.JLabel lblResolucion;
     private javax.swing.JLabel lblResolucion1;
-    private javax.swing.JLabel lblResolucion2;
     private javax.swing.JLabel lblTipoSuministro;
     private javax.swing.JLabel lblTipoSuministro1;
-    private javax.swing.JLabel lblTipoSuministro2;
+    private javax.swing.JPanel panelDinamico;
     private javax.swing.JPanel panelEliminar;
+    private javax.swing.JPanel panelEntrega;
     private javax.swing.JPanel panelModificar;
+    private javax.swing.JPanel panelTransmision;
+    private javax.swing.JPanel panelVigilancia;
     private javax.swing.JPanel panelcrear;
     private javax.swing.JTextField txtBateria;
     private javax.swing.JTextField txtBateria1;
-    private javax.swing.JTextField txtBateria2;
     private javax.swing.JTextField txtCapacidadCarga;
     private javax.swing.JTextField txtCapacidadCarga1;
-    private javax.swing.JTextField txtCapacidadCarga2;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtCodigo1;
-    private javax.swing.JTextField txtCodigo2;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtModelo1;
-    private javax.swing.JTextField txtModelo2;
+    private javax.swing.JTextField txtNuevo;
     private javax.swing.JTextField txtPlataforma;
     private javax.swing.JTextField txtPlataforma1;
-    private javax.swing.JTextField txtPlataforma2;
     private javax.swing.JTextField txtResolucion;
     private javax.swing.JTextField txtResolucion1;
-    private javax.swing.JTextField txtResolucion2;
     private javax.swing.JTextField txtTipoSuministro;
     private javax.swing.JTextField txtTipoSuministro1;
-    private javax.swing.JTextField txtTipoSuministro2;
     // End of variables declaration//GEN-END:variables
 }
