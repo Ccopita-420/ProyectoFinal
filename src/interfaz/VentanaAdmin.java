@@ -81,6 +81,9 @@ public class VentanaAdmin extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         btnModificar = new javax.swing.JButton();
+        lblActual = new javax.swing.JLabel();
+        lblDato = new javax.swing.JLabel();
+        lblConsejo = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         cmbUsuarios1 = new javax.swing.JComboBox<>();
         btnEliminar = new javax.swing.JButton();
@@ -182,6 +185,8 @@ public class VentanaAdmin extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Crear", jPanel2);
 
+        cmbUsuarios.addActionListener(this::cmbUsuariosActionPerformed);
+
         cmbModificar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "DNI", "Nombres", "Apellidos", "Usuario", "Contraseña", "Rol" }));
         cmbModificar.addItemListener(this::cmbModificarItemStateChanged);
 
@@ -194,6 +199,8 @@ public class VentanaAdmin extends javax.swing.JFrame {
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(this::btnModificarActionPerformed);
 
+        lblActual.setText("DNI actual:");
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -203,15 +210,18 @@ public class VentanaAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lblNuevoDato)
                     .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                    .addComponent(jLabel8)
+                    .addComponent(lblActual))
                 .addGap(32, 32, 32)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnModificar)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(cmbUsuarios, 0, 140, Short.MAX_VALUE)
-                        .addComponent(cmbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtModificar)))
-                .addContainerGap(372, Short.MAX_VALUE))
+                    .addComponent(cmbUsuarios, 0, 140, Short.MAX_VALUE)
+                    .addComponent(cmbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtModificar)
+                    .addComponent(lblDato, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(51, 51, 51)
+                .addComponent(lblConsejo)
+                .addContainerGap(321, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -224,13 +234,18 @@ public class VentanaAdmin extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cmbModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
+                .addGap(25, 25, 25)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblActual)
+                    .addComponent(lblDato))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNuevoDato)
-                    .addComponent(txtModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtModificar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblConsejo))
                 .addGap(26, 26, 26)
                 .addComponent(btnModificar)
-                .addContainerGap(257, Short.MAX_VALUE))
+                .addContainerGap(216, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Modificar", jPanel3);
@@ -371,29 +386,80 @@ public class VentanaAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1MenuSelected
 
     private void cmbModificarItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbModificarItemStateChanged
+        if (cmbUsuarios.getSelectedItem() == null || cmbModificar.getSelectedItem() == null) {
+            return;
+        }
         if (evt.getStateChange() == java.awt.event.ItemEvent.SELECTED) {
             String aspectoSeleccionado = cmbModificar.getSelectedItem().toString();
+            String usuarioSeleccionado = cmbUsuarios.getSelectedItem().toString();
+
+            Usuario u = sistema.buscarUsuarioPorUsername(usuarioSeleccionado);
+
             if (aspectoSeleccionado.equals("DNI")) {
+                lblActual.setText("DNI actual:");
+                lblDato.setText(u.getDni());
                 lblNuevoDato.setText("Nuevo DNI:");
+                lblConsejo.setText("");
             } else if (aspectoSeleccionado.equals("Nombres")) {
+                lblActual.setText("Nombres actuales:");
+                lblDato.setText(u.getNombres());
                 lblNuevoDato.setText("Nuevos Nombres:");
+                lblConsejo.setText("");
             } else if (aspectoSeleccionado.equals("Apellidos")) {
+                lblActual.setText("Apellidos actuales:");
+                lblDato.setText(u.getApellidos());
                 lblNuevoDato.setText("Nuevos Apellidos:");
+                lblConsejo.setText("");
             } else if (aspectoSeleccionado.equals("Usuario")) {
+                lblActual.setText("Usuario actual:");
+                lblDato.setText(u.getUsername());
                 lblNuevoDato.setText("Nuevo Usuario:");
+                lblConsejo.setText("");
             } else if (aspectoSeleccionado.equals("Contraseña")) {
+                lblActual.setText("Contraseña actual:");
+                lblDato.setText(u.getPassword());
                 lblNuevoDato.setText("Nueva Contraseña:");
+                lblConsejo.setText("");
             } else if (aspectoSeleccionado.equals("Rol")) {
+                lblActual.setText("Rol actual:");
+                lblDato.setText(u.getRol());
                 lblNuevoDato.setText("Nuevo Rol:");
+                lblConsejo.setText("Roles disponibles: Administrador, Supervisor, Operador");
             } else {
                 lblNuevoDato.setText("Nuevo Dato:");
+                lblConsejo.setText("");
             }
         }
     }//GEN-LAST:event_cmbModificarItemStateChanged
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        // TODO add your handling code here:
+        if (cmbUsuarios.getSelectedItem() != null && !txtModificar.getText().trim().isEmpty()) {
+            String usuarioAModificar = cmbUsuarios.getSelectedItem().toString();
+            String aspectoAElegir = cmbModificar.getSelectedItem().toString();
+            String nuevoDato = txtModificar.getText().trim();
+
+            boolean exito = sistema.modificarUsuario(usuarioAModificar, aspectoAElegir, nuevoDato);
+
+            if (exito) {
+                JOptionPane.showMessageDialog(this, "¡Usuario actualizado con éxito!");
+                txtModificar.setText("");
+                llenarComboBoxUsuarios();
+                llenarComboBoxEliminar();
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo realizar la modificación.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, selecciona un usuario e ingresa el nuevo valor.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_btnModificarActionPerformed
+    }
+
+    private void cmbUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbUsuariosActionPerformed
+        // TODO add your handling code here:
+        if (cmbUsuarios.getSelectedItem() == null || cmbModificar.getSelectedItem() == null) {
+            return;
+        }
+        cmbModificarItemStateChanged(new java.awt.event.ItemEvent(cmbModificar, 0, cmbModificar.getSelectedItem(), java.awt.event.ItemEvent.SELECTED));
+    }//GEN-LAST:event_cmbUsuariosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -444,6 +510,9 @@ public class VentanaAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JLabel lblActual;
+    private javax.swing.JLabel lblConsejo;
+    private javax.swing.JLabel lblDato;
     private javax.swing.JLabel lblNuevoDato;
     private javax.swing.JTextField txtApellidos;
     private javax.swing.JTextField txtContraseña;

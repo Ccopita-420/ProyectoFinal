@@ -246,17 +246,19 @@
                           <Component id="lblNuevoDato" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblActual" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="cmbUsuarios" pref="140" max="32767" attributes="0"/>
-                              <Component id="cmbModificar" min="-2" max="-2" attributes="0"/>
-                              <Component id="txtModificar" alignment="0" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="cmbUsuarios" pref="140" max="32767" attributes="0"/>
+                          <Component id="cmbModificar" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtModificar" alignment="0" max="32767" attributes="0"/>
+                          <Component id="lblDato" alignment="0" max="32767" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="372" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="51" max="-2" attributes="0"/>
+                      <Component id="lblConsejo" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="321" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -273,14 +275,20 @@
                           <Component id="cmbModificar" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lblActual" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblDato" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblNuevoDato" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtModificar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblConsejo" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                       <Component id="btnModificar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="257" max="32767" attributes="0"/>
+                      <EmptySpace pref="216" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -292,6 +300,9 @@
                   <StringArray count="0"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cmbUsuariosActionPerformed"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -340,6 +351,15 @@
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnModificarActionPerformed"/>
               </Events>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblActual">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="DNI actual:"/>
+              </Properties>
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblDato">
+            </Component>
+            <Component class="javax.swing.JLabel" name="lblConsejo">
             </Component>
           </SubComponents>
         </Container>
