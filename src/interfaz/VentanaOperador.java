@@ -1,29 +1,58 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package interfaz;
+
 import drones.*;
-/**
- *
- * @author carlo
- */
+import javax.swing.JOptionPane;
+import usuarios.*;
+
 public class VentanaOperador extends javax.swing.JFrame {
-    
+
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaOperador.class.getName());
-private SistemaGestionDrones sistema;
+    private SistemaGestionDrones sistema;
+
     /**
      * Creates new form VentanaOperador
      */
     public VentanaOperador(SistemaGestionDrones sistema) {
-    this.sistema = sistema;
-    initComponents();
-    setLocationRelativeTo(null);
-}
+        this.sistema = sistema;
+        initComponents();
+        cargarDronesValidos();
+        cargarSedes();
+        setLocationRelativeTo(null);
+    }
 
-public VentanaOperador() {
-    this(new SistemaGestionDrones());
-}
+    public VentanaOperador() {
+        this(new SistemaGestionDrones());
+    }
+
+    private void cargarDronesValidos() {
+        cmbDronesDisponibles.removeAllItems();
+        cmbDronesDisponibles.addItem("Seleccione...");
+
+        Dron[] lista = sistema.getDrones();
+        int total = sistema.getContDrones();
+
+        for (int i = 0; i < total; i++) {
+            if (lista[i] != null) {
+                if (lista[i].getEstado().equalsIgnoreCase("Disponible") && lista[i].getNivelBateria() >= 30) {
+                    cmbDronesDisponibles.addItem(lista[i].getCodigo());
+                }
+            }
+        }
+    }
+
+    private void cargarSedes() {
+        cmbSedes.removeAllItems();
+        cmbSedes.addItem("Seleccione...");
+
+        Sede[] lista = sistema.getSedes();
+        int total = sistema.getContSedes();
+
+        for (int i = 0; i < total; i++) {
+            if (lista[i] != null) {
+                cmbSedes.addItem(lista[i].getCodigo());
+            }
+        }
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -36,6 +65,19 @@ public VentanaOperador() {
 
         jTabbedPane1 = new javax.swing.JTabbedPane();
         jPanel1 = new javax.swing.JPanel();
+        btnCrearMision = new javax.swing.JButton();
+        txtCodigoMision = new javax.swing.JTextField();
+        txtFechaMision = new javax.swing.JTextField();
+        txtHoraMision = new javax.swing.JTextField();
+        cmbDronesDisponibles = new javax.swing.JComboBox<>();
+        cmbSedes = new javax.swing.JComboBox<>();
+        cmbTipoMision = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -44,15 +86,91 @@ public VentanaOperador() {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        btnCrearMision.setText("Crear Misión");
+        btnCrearMision.addActionListener(this::btnCrearMisionActionPerformed);
+
+        cmbDronesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbSedes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbTipoMision.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel1.setText("Codigo de Misión");
+
+        jLabel2.setText("Fecha de Misión");
+
+        jLabel3.setText("Hora de Misión");
+
+        jLabel4.setText("Drones Disponibles");
+
+        jLabel5.setText("Sedes");
+
+        jLabel6.setText("Tipo de Misión");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 623, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(258, 258, 258)
+                        .addComponent(btnCrearMision))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtFechaMision, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(247, 247, 247)
+                                .addComponent(txtCodigoMision, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbDronesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtHoraMision, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbSedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbTipoMision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap(100, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(68, 68, 68)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigoMision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtFechaMision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtHoraMision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbDronesDisponibles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbSedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbTipoMision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addComponent(btnCrearMision)
+                .addGap(52, 52, 52))
         );
 
         jTabbedPane1.addTab("Crear Misión", jPanel1);
@@ -65,7 +183,7 @@ public VentanaOperador() {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Registrar Ruta", jPanel2);
@@ -78,7 +196,7 @@ public VentanaOperador() {
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Control de Misión", jPanel3);
@@ -91,12 +209,22 @@ public VentanaOperador() {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 489, Short.MAX_VALUE)
+            .addGap(0, 519, Short.MAX_VALUE)
         );
 
         jTabbedPane1.addTab("Reportes", jPanel4);
 
         jMenu1.setText("Cerrar Sesión");
+        jMenu1.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu1MenuSelected(evt);
+            }
+        });
+        jMenu1.addActionListener(this::jMenu1ActionPerformed);
         jMenuBar1.add(jMenu1);
 
         setJMenuBar(jMenuBar1);
@@ -109,13 +237,65 @@ public VentanaOperador() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 30, Short.MAX_VALUE)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 524, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jTabbedPane1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnCrearMisionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearMisionActionPerformed
+        String codigo = txtCodigoMision.getText().trim();
+        String fecha = txtFechaMision.getText().trim();
+        String hora = txtHoraMision.getText().trim();
+        Object dronSel = cmbDronesDisponibles.getSelectedItem();
+        Object sedeSel = cmbSedes.getSelectedItem();
+        Object tipoSel = cmbTipoMision.getSelectedItem();
+
+        if (codigo.isEmpty() || fecha.isEmpty() || hora.isEmpty()
+                || dronSel == null || dronSel.toString().equals("Seleccione...")
+                || sedeSel == null || sedeSel.toString().equals("Seleccione...")
+                || tipoSel == null || tipoSel.toString().equals("Seleccione...")) {
+
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos para crear la misión.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        Dron dron = sistema.buscarDronPorCodigo(dronSel.toString());
+        Sede sede = sistema.buscarSedePorCodigo(sedeSel.toString());
+
+        if (dron == null || sede == null) {
+            JOptionPane.showMessageDialog(this, "Error de consistencia: No se encontró el dron o la sede en el sistema.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        Mision nuevaMision = new Mision(codigo, fecha, hora, tipoSel.toString(), "En proceso", sede, dron);
+
+        boolean exito = sistema.crearMision(nuevaMision);
+
+        if (exito) {
+            JOptionPane.showMessageDialog(this, "¡Misión '" + codigo + "' creada con éxito!\nEl dron cambió su estado a 'En misión'.");
+
+            txtCodigoMision.setText("");
+            txtFechaMision.setText("");
+            txtHoraMision.setText("");
+            cmbTipoMision.setSelectedIndex(0);
+
+            cargarDronesValidos();
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo crear la misión.\nVerifique que el dron esté disponible y mantenga un nivel de batería >= 30%.", "Restricción de Negocio", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCrearMisionActionPerformed
+
+    private void jMenu1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu1ActionPerformed
+
+    }//GEN-LAST:event_jMenu1ActionPerformed
+
+    private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
+        VentanaLogin login = new VentanaLogin(sistema);
+        login.setVisible(true);
+        login.setLocationRelativeTo(null);
+        this.dispose();
+    }//GEN-LAST:event_jMenu1MenuSelected
 
     /**
      * @param args the command line arguments
@@ -143,6 +323,16 @@ public VentanaOperador() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCrearMision;
+    private javax.swing.JComboBox<String> cmbDronesDisponibles;
+    private javax.swing.JComboBox<String> cmbSedes;
+    private javax.swing.JComboBox<String> cmbTipoMision;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -150,5 +340,8 @@ public VentanaOperador() {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField txtCodigoMision;
+    private javax.swing.JTextField txtFechaMision;
+    private javax.swing.JTextField txtHoraMision;
     // End of variables declaration//GEN-END:variables
 }
