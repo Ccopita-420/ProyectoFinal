@@ -608,6 +608,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Reporte de Drones con Bateria Baja"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnReporteBateriasActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

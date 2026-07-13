@@ -405,6 +405,7 @@ public class VentanaOperador extends javax.swing.JFrame {
         btnReporteCostos.addActionListener(this::btnReporteCostosActionPerformed);
 
         btnReporteBaterias.setText("Reporte de Drones con Bateria Baja");
+        btnReporteBaterias.addActionListener(this::btnReporteBateriasActionPerformed);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -655,6 +656,10 @@ public class VentanaOperador extends javax.swing.JFrame {
     private void btnReporteCostosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteCostosActionPerformed
         txtConsolaReportes.setText(sistema.generarReporteCostosMantenimiento());
     }//GEN-LAST:event_btnReporteCostosActionPerformed
+
+    private void btnReporteBateriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteBateriasActionPerformed
+        txtConsolaReportes.setText(sistema.generarReporteBateriaBaja());
+    }//GEN-LAST:event_btnReporteBateriasActionPerformed
 
     /**
      * @param args the command line arguments
