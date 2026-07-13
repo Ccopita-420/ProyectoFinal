@@ -4,7 +4,7 @@ import usuarios.*;
 import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
-public class SistemaGestionDrones {
+public class SistemaGestionDrones implements Reportable{
 
     private Dron[] drones = new Dron[100];
     private int contDrones = 0;
@@ -225,6 +225,64 @@ public class SistemaGestionDrones {
             }
         }
         return null;
+    }
+    
+    @Override
+    public String generarReporte() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("==================================================\n");
+        sb.append("      REPORTE CONSOLIDADO DE MISIONES POR SEDE\n");
+        sb.append("==================================================\n\n");
+        
+        if (contSedes == 0) {
+            sb.append("No hay sedes registradas en el sistema.\n");
+            return sb.toString();
+        }
+        
+        for (int i = 0; i < contSedes; i++) {
+            if (sedes[i] != null) {
+                sb.append("SEDE: ").append(sedes[i].getNombre())
+                  .append(" (Código: ").append(sedes[i].getCodigo()).append(")\n");
+                sb.append("--------------------------------------------------\n");
+                
+                int misionesEnSede = 0;
+                for (int j = 0; j < contMisiones; j++) {
+                    if (misiones[j] != null && misiones[j].getSedeAsignada().getCodigo().equalsIgnoreCase(sedes[i].getCodigo())) {
+                        misionesEnSede++;
+                        sb.append(" Misión: ").append(misiones[j].getCodigo())
+                          .append(" | Tipo: ").append(misiones[j].getTipoMision())
+                          .append(" | Estado: ").append(misiones[j].getEstado()).append("\n");
+                        sb.append("    Dron: ").append(misiones[j].getDronAsignado().getCodigo())
+                          .append(" (").append(misiones[j].getDronAsignado().getModelo()).append(")\n");
+                        sb.append("    Tramos de vuelo: ").append(misiones[j].getContRutas()).append("\n\n");
+                    }
+                }
+                if (misionesEnSede == 0) {
+                    sb.append("  [Sin misiones asignadas a esta sede aún]\n\n");
+                }
+            }
+        }
+        return sb.toString();
+    }
+    
+    public String generarReporteEstadoDrones() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("==================================================\n");
+        sb.append("          ESTADO ACTUAL DE LA FLOTA DE DRONES\n");
+        sb.append("==================================================\n\n");
+        
+        for (int i = 0; i < contDrones; i++) {
+            if (drones[i] != null) {
+                sb.append("Dron: ").append(drones[i].getCodigo())
+                  .append(" | Modelo: ").append(drones[i].getModelo())
+                  .append("\n   Estado: ").append(drones[i].getEstado())
+                  .append(" | Batería: ").append(drones[i].getNivelBateria()).append("%\n");
+
+//                sb.append("   Especificación: ").append(drones[i].getDetallesEspecificos()).append("\n");
+                sb.append("--------------------------------------------------\n");
+            }
+        }
+        return sb.toString();
     }
 
 }
