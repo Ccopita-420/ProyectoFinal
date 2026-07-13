@@ -102,7 +102,7 @@ public class SistemaGestionDrones {
 
     public Mision buscarMisionPorCodigo(String codigo) {
         for (int i = 0; i < contMisiones; i++) {
-            if (misiones[i].getCodigo().equalsIgnoreCase(codigo)) {
+            if (misiones[i] != null && misiones[i].getCodigo().equalsIgnoreCase(codigo)) {
                 return misiones[i];
             }
         }
@@ -124,6 +124,14 @@ public class SistemaGestionDrones {
             }
         }
         return false;
+    }
+
+    public Mision[] getMisiones() {
+        return this.misiones;
+    }
+
+    public int getContMisiones() {
+        return this.contMisiones;
     }
 
     public boolean registrarDron(Dron nuevoDron) {
@@ -210,59 +218,13 @@ public class SistemaGestionDrones {
         return contSedes;
     }
 
-    public static void main(String[] args) {
-        System.setOut(new PrintStream(System.out, true, StandardCharsets.UTF_8));
-
-        // TODO code application logic here
-        System.out.println("=== 1. PRUEBA DE USUARIOS ===");
-        Usuario[] listaUsuarios = new Usuario[3];
-
-        listaUsuarios[0] = new Administrador("11111111", "Carlos", "Mendoza", "admin01", "pasw123");
-
-        Usuario usuarioLogueado = listaUsuarios[0];
-        System.out.println("Intento de login correcto: " + usuarioLogueado.login("admin01", "pasw123"));
-        System.out.println("Intento de login incorrecto: " + usuarioLogueado.login("admin01", "claveFalsa"));
-
-        System.out.println();
-
-        System.out.println("=== 2. PRUEBA DE DRONES ===");
-
-        Dron[] inventarioDrones = new Dron[3];
-
-        inventarioDrones[0] = new DronVigilancia("DRN-001", "Phantom 4 Pro", "Disponible", "Vigilancia", 95.5, "360 grados panorámica");
-        inventarioDrones[1] = new DronEntrega("DRN-002", "Matrice 300", "Disponible", "Entrega", 80.0, 5, "lol");
-
-        for (int i = 0; i < inventarioDrones.length; i++) {
-            if (inventarioDrones[i] != null) {
-                inventarioDrones[i].mostrarInformacion();
-                System.out.println("------------------------------------");
+    public Sede buscarSedePorCodigo(String codigo) {
+        for (int i = 0; i < contSedes; i++) {
+            if (sedes[i] != null && sedes[i].getCodigo().equalsIgnoreCase(codigo)) {
+                return sedes[i];
             }
         }
-        System.out.println();
-        System.out.println("=== 3. PRUEBA DE MISIONES ===");
-
-        SistemaGestionDrones sistema = new SistemaGestionDrones();
-
-        Sede sede1 = new Sede("SED-001", "Estadio Nacional", "Lima", 43000);
-
-        Mision mision1 = new Mision(
-                "MIS-001",
-                "15/06/2026",
-                "18:00",
-                "Vigilancia aérea",
-                "Pendiente",
-                sede1,
-                inventarioDrones[0]
-        );
-
-        boolean creada = sistema.crearMision(mision1);
-
-        System.out.println("Misión creada: " + creada);
-        System.out.println("Estado del dron: " + inventarioDrones[0].getEstado());
-
-        boolean finalizada = sistema.finalizarMision("MIS-001", "Disponible");
-
-        System.out.println("Misión finalizada: " + finalizada);
-        System.out.println("Estado final del dron: " + inventarioDrones[0].getEstado());
+        return null;
     }
+
 }

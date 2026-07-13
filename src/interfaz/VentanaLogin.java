@@ -24,14 +24,8 @@ public class VentanaLogin extends javax.swing.JFrame {
 
     public VentanaLogin() {
     this.sistema = new SistemaGestionDrones();
-    cargarDatosPrueba();
     initComponents();
     setLocationRelativeTo(null);
-}
-    private void cargarDatosPrueba() {
-    sistema.registrarUsuario(
-        new Administrador("11111111", "Carlos", "Mendoza", "admin01", "pasw123")
-    );
 }
 
     /**
@@ -121,17 +115,18 @@ public class VentanaLogin extends javax.swing.JFrame {
                     principal.setLocationRelativeTo(null);
 
                 } else if (u.getRol().equalsIgnoreCase("Supervisor")) {
-                    VentanaSupervisor principal = new VentanaSupervisor(sistema);
+                    VentanaSupervisor principal = new VentanaSupervisor(sistema,this);
                     principal.setVisible(true);
                     principal.setLocationRelativeTo(null);
+                    this.setVisible(false);
 
                 } else if (u.getRol().equalsIgnoreCase("Operador")) {
-                    VentanaOperador principal = new VentanaOperador(sistema);
+                    VentanaOperador principal = new VentanaOperador(sistema,this);
                     principal.setVisible(true);
                     principal.setLocationRelativeTo(null);
+                    this.setVisible(false);
                 }
 
-                this.dispose();
             } else {
                 JOptionPane.showMessageDialog(this, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
             }
@@ -143,27 +138,6 @@ public class VentanaLogin extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(() -> new VentanaLogin().setVisible(true));
-    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;

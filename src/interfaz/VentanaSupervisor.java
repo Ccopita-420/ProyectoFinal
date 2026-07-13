@@ -1,24 +1,27 @@
-
 package interfaz;
+
 import drones.*;
 import usuarios.*;
 import javax.swing.JOptionPane;
 
 public class VentanaSupervisor extends javax.swing.JFrame {
+
     private SistemaGestionDrones sistema;
     private Usuario usuarioLogueado;
+    private javax.swing.JFrame ventanaLogin;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaSupervisor.class.getName());
 
-public VentanaSupervisor(SistemaGestionDrones sistema) {
-    this.sistema = sistema;
-    initComponents();
-    setLocationRelativeTo(null);
-}
+    public VentanaSupervisor(SistemaGestionDrones sistema, javax.swing.JFrame ventanaLogin) {
+        this.sistema = sistema;
+        this.ventanaLogin = ventanaLogin;
+        initComponents();
+        setLocationRelativeTo(null);
+    }
 
-public VentanaSupervisor() {
-    //this(new SistemaGestionDrones());
-    initComponents();
-}
+    public VentanaSupervisor() {
+        //this(new SistemaGestionDrones());
+        initComponents();
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -91,27 +94,28 @@ public VentanaSupervisor() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-VentanaLogin login = new VentanaLogin();
-login.setVisible(true);
-this.dispose();        // TODO add your handling code here:
+        if (this.ventanaLogin != null) {
+            this.ventanaLogin.setVisible(true);
+        }
+        this.dispose();// TODO add your handling code here:
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-VentanaGestionDrones v = new VentanaGestionDrones(sistema);
-v.setVisible(true);
-v.setLocationRelativeTo(null);        // TODO add your handling code here:
+        VentanaGestionDrones v = new VentanaGestionDrones(sistema);
+        v.setVisible(true);
+        v.setLocationRelativeTo(null);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-VentanaGestionSedes v = new VentanaGestionSedes(sistema);
-v.setVisible(true);
-v.setLocationRelativeTo(null);        // TODO add your handling code here:
+        VentanaGestionSedes v = new VentanaGestionSedes(sistema);
+        v.setVisible(true);
+        v.setLocationRelativeTo(null);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-VentanaGestionMantenimientos v = new VentanaGestionMantenimientos(sistema);
-v.setVisible(true);
-v.setLocationRelativeTo(null);        // TODO add your handling code here:
+        VentanaGestionMantenimientos v = new VentanaGestionMantenimientos(sistema);
+        v.setVisible(true);
+        v.setLocationRelativeTo(null);        // TODO add your handling code here:
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**

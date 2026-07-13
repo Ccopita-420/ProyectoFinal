@@ -6,22 +6,26 @@ import usuarios.*;
 
 public class VentanaOperador extends javax.swing.JFrame {
 
+    private javax.swing.JFrame ventanaLogin;
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(VentanaOperador.class.getName());
     private SistemaGestionDrones sistema;
 
     /**
      * Creates new form VentanaOperador
      */
-    public VentanaOperador(SistemaGestionDrones sistema) {
+    public VentanaOperador(SistemaGestionDrones sistema, javax.swing.JFrame ventanaLogin) {
         this.sistema = sistema;
+        this.ventanaLogin = ventanaLogin;
         initComponents();
         cargarDronesValidos();
         cargarSedes();
+        cargarMisionesActivas();
+        cmbTipoMision.addItem("Seleccione un dron primero...");
         setLocationRelativeTo(null);
     }
 
     public VentanaOperador() {
-        this(new SistemaGestionDrones());
+        initComponents();
     }
 
     private void cargarDronesValidos() {
@@ -54,6 +58,44 @@ public class VentanaOperador extends javax.swing.JFrame {
         }
     }
 
+    private void actualizarTiposMisionPorDron(String codigoDron) {
+        cmbTipoMision.removeAllItems();
+        cmbTipoMision.addItem("Seleccione...");
+
+        if (codigoDron == null || codigoDron.equals("Seleccione...")) {
+            return;
+        }
+
+        Dron dron = sistema.buscarDronPorCodigo(codigoDron);
+
+        if (dron instanceof DronVigilancia) {
+            cmbTipoMision.addItem("Monitoreo de accesos");
+            cmbTipoMision.addItem("Vigilancia aérea");
+
+        } else if (dron instanceof DronEntrega) {
+            cmbTipoMision.addItem("Entrega de suministros");
+
+        } else if (dron instanceof DronTransmision) {
+            cmbTipoMision.addItem("Transmisión de imágenes");
+        }
+    }
+
+    private void cargarMisionesActivas() {
+        cmbMisionesActivas.removeAllItems();
+        cmbMisionesActivas.addItem("Seleccione...");
+
+        Mision[] lista = sistema.getMisiones();
+        int total = sistema.getContMisiones();
+
+        for (int i = 0; i < total; i++) {
+            if (lista[i] != null) {
+                if (lista[i].getEstado().equalsIgnoreCase("En proceso") || lista[i].getEstado().equalsIgnoreCase("Pendiente")) {
+                    cmbMisionesActivas.addItem(lista[i].getCodigo());
+                }
+            }
+        }
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +121,17 @@ public class VentanaOperador extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
+        cmbMisionesActivas = new javax.swing.JComboBox<>();
+        txtCodigoRuta = new javax.swing.JTextField();
+        txtZonaAsignada = new javax.swing.JTextField();
+        txtDuracionRuta = new javax.swing.JTextField();
+        cmbPrioridadRuta = new javax.swing.JComboBox<>();
+        btnRegistrarRuta = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -86,10 +139,13 @@ public class VentanaOperador extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTabbedPane1.addChangeListener(this::jTabbedPane1StateChanged);
+
         btnCrearMision.setText("Crear Misión");
         btnCrearMision.addActionListener(this::btnCrearMisionActionPerformed);
 
         cmbDronesDisponibles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbDronesDisponibles.addActionListener(this::cmbDronesDisponiblesActionPerformed);
 
         cmbSedes.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
@@ -175,15 +231,75 @@ public class VentanaOperador extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Crear Misión", jPanel1);
 
+        cmbMisionesActivas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbPrioridadRuta.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 - Alta", "2 - Media", "3 - Baja" }));
+
+        btnRegistrarRuta.setText("Registrar Ruta");
+        btnRegistrarRuta.addActionListener(this::btnRegistrarRutaActionPerformed);
+
+        jLabel7.setText("Misiones Activas");
+
+        jLabel8.setText("Codigo de Ruta");
+
+        jLabel9.setText("Zona Asignada");
+
+        jLabel10.setText("Duración en minutos");
+
+        jLabel11.setText("Prioridad");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 623, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(69, 69, 69)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(cmbPrioridadRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(cmbMisionesActivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtCodigoRuta, javax.swing.GroupLayout.DEFAULT_SIZE, 117, Short.MAX_VALUE)
+                        .addComponent(txtZonaAsignada)
+                        .addComponent(txtDuracionRuta)))
+                .addGap(168, 168, 168))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(237, 237, 237)
+                .addComponent(btnRegistrarRuta)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 519, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(56, 56, 56)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbMisionesActivas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtCodigoRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel8))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtZonaAsignada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDuracionRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(cmbPrioridadRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel11))
+                .addGap(33, 33, 33)
+                .addComponent(btnRegistrarRuta)
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Registrar Ruta", jPanel2);
@@ -274,6 +390,7 @@ public class VentanaOperador extends javax.swing.JFrame {
 
         if (exito) {
             JOptionPane.showMessageDialog(this, "¡Misión '" + codigo + "' creada con éxito!\nEl dron cambió su estado a 'En misión'.");
+            cargarMisionesActivas();
 
             txtCodigoMision.setText("");
             txtFechaMision.setText("");
@@ -291,11 +408,75 @@ public class VentanaOperador extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenu1ActionPerformed
 
     private void jMenu1MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu1MenuSelected
-        VentanaLogin login = new VentanaLogin(sistema);
-        login.setVisible(true);
-        login.setLocationRelativeTo(null);
+        if (this.ventanaLogin != null) {
+            this.ventanaLogin.setVisible(true);
+        }
         this.dispose();
     }//GEN-LAST:event_jMenu1MenuSelected
+
+    private void cmbDronesDisponiblesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDronesDisponiblesActionPerformed
+        Object seleccionado = cmbDronesDisponibles.getSelectedItem();
+        if (seleccionado != null) {
+            actualizarTiposMisionPorDron(seleccionado.toString());
+        }
+    }//GEN-LAST:event_cmbDronesDisponiblesActionPerformed
+
+    private void btnRegistrarRutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarRutaActionPerformed
+        Object misionSel = cmbMisionesActivas.getSelectedItem();
+        String codigoRuta = txtCodigoRuta.getText().trim();
+        String zona = txtZonaAsignada.getText().trim();
+        String duracionStr = txtDuracionRuta.getText().trim();
+        Object prioridadSel = cmbPrioridadRuta.getSelectedItem();
+
+        if (misionSel == null || misionSel.toString().equals("Seleccione...")
+                || codigoRuta.isEmpty() || zona.isEmpty() || duracionStr.isEmpty()
+                || prioridadSel == null || prioridadSel.toString().equals("Seleccione...")) {
+
+            JOptionPane.showMessageDialog(this, "Por favor, complete todos los campos de la ruta.", "Campos vacíos", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        int duracion = 0;
+        try {
+            duracion = Integer.parseInt(duracionStr);
+            if (duracion <= 0) {
+                throw new NumberFormatException();
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "La duración debe ser un número entero mayor a 0.", "Dato inválido", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        int prioridad = Integer.parseInt(prioridadSel.toString().substring(0, 1));
+
+        Mision misionDestino = sistema.buscarMisionPorCodigo(misionSel.toString());
+
+        if (misionDestino == null) {
+            JOptionPane.showMessageDialog(this, "No se encontró la misión seleccionada.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        RutaVuelo nuevaRuta = new RutaVuelo(codigoRuta, zona, duracion, prioridad);
+
+        if (misionDestino.getContRutas() < 10) {
+            misionDestino.agregarRuta(nuevaRuta);
+            JOptionPane.showMessageDialog(this, "¡Ruta '" + codigoRuta + "' agregada con éxito a la misión " + misionSel.toString() + "!");
+
+            // Limpieza de casillas
+            txtCodigoRuta.setText("");
+            txtZonaAsignada.setText("");
+            txtDuracionRuta.setText("");
+            cmbPrioridadRuta.setSelectedIndex(0);
+        } else {
+            JOptionPane.showMessageDialog(this, "Esta misión ya alcanzó el límite máximo de 10 rutas de vuelo.", "Arreglo Lleno xd", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnRegistrarRutaActionPerformed
+
+    private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
+        if (jTabbedPane1.getSelectedIndex() == 1) {
+            cargarMisionesActivas();
+        }        // TODO add your handling code here:
+    }//GEN-LAST:event_jTabbedPane1StateChanged
 
     /**
      * @param args the command line arguments
@@ -324,15 +505,23 @@ public class VentanaOperador extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearMision;
+    private javax.swing.JButton btnRegistrarRuta;
     private javax.swing.JComboBox<String> cmbDronesDisponibles;
+    private javax.swing.JComboBox<String> cmbMisionesActivas;
+    private javax.swing.JComboBox<String> cmbPrioridadRuta;
     private javax.swing.JComboBox<String> cmbSedes;
     private javax.swing.JComboBox<String> cmbTipoMision;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
@@ -341,7 +530,10 @@ public class VentanaOperador extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTextField txtCodigoMision;
+    private javax.swing.JTextField txtCodigoRuta;
+    private javax.swing.JTextField txtDuracionRuta;
     private javax.swing.JTextField txtFechaMision;
     private javax.swing.JTextField txtHoraMision;
+    private javax.swing.JTextField txtZonaAsignada;
     // End of variables declaration//GEN-END:variables
 }
