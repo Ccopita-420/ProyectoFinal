@@ -47,6 +47,10 @@ public abstract class Dron {
         this.nivelBateria = nivelBateria;
     }
 
+    public String getDetallesEspecificos() {
+        return "Sin especificaciones adicionales.";
+    }
+
     public boolean modificarAtributo(String aspecto, String nuevoValor) {
         if (aspecto.equalsIgnoreCase("Código")) {
             if (nuevoValor.trim().isEmpty()) {

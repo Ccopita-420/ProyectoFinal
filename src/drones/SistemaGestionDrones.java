@@ -278,7 +278,7 @@ public class SistemaGestionDrones implements Reportable{
                   .append("\n   Estado: ").append(drones[i].getEstado())
                   .append(" | Batería: ").append(drones[i].getNivelBateria()).append("%\n");
 
-//                sb.append("   Especificación: ").append(drones[i].getDetallesEspecificos()).append("\n");
+                sb.append("   Especificación: ").append(drones[i].getDetallesEspecificos()).append("\n");
                 sb.append("--------------------------------------------------\n");
             }
         }

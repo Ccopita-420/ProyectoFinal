@@ -43,6 +43,10 @@ public class DronTransmision extends Dron {
         }
         return false;
     }
+    @Override
+public String getDetallesEspecificos() {
+    return "Calidad de Video: " + this.resolucionCamara + " | Transmitiendo vía: " + this.plataformaTransmision;
+}
 
     @Override
     public void mostrarInformacion() {

@@ -30,6 +30,11 @@ public class DronVigilancia extends Dron {
     }
 
     @Override
+    public String getDetallesEspecificos() {
+        return "Campo de Visión: " + this.campoVision;
+    }
+
+    @Override
     public void mostrarInformacion() {
         System.out.println("--- INFORMACIÓN DRON DE VIGILANCIA ---");
         System.out.println("Código: " + codigo);

@@ -49,6 +49,11 @@ public class DronEntrega extends Dron {
     }
 
     @Override
+    public String getDetallesEspecificos() {
+        return "Capacidad Máxima: " + this.capacidadCarga + " kg | Suministro: " + this.tipoSuministro;
+    }
+
+    @Override
     public void mostrarInformacion() {
         System.out.println("--- INFORMACIÓN DRON DE ENTREGA ---");
         System.out.println("Código: " + codigo);
