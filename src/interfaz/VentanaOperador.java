@@ -159,6 +159,8 @@ public class VentanaOperador extends javax.swing.JFrame {
         btnReporteMisiones = new javax.swing.JButton();
         btnReporteDrones = new javax.swing.JButton();
         txtConsolaReportes = new javax.swing.JTextArea();
+        btnReporteCostos = new javax.swing.JButton();
+        btnReporteBaterias = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
 
@@ -220,7 +222,7 @@ public class VentanaOperador extends javax.swing.JFrame {
                                     .addComponent(txtHoraMision, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbSedes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(cmbTipoMision, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
-                .addContainerGap(100, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -285,7 +287,7 @@ public class VentanaOperador extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(jLabel10)
                     .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 160, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbPrioridadRuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -354,7 +356,7 @@ public class VentanaOperador extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(cmbMisionesEnProceso, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbEstadoPostVuelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -399,24 +401,33 @@ public class VentanaOperador extends javax.swing.JFrame {
         txtConsolaReportes.setColumns(20);
         txtConsolaReportes.setRows(5);
 
+        btnReporteCostos.setText("Reporte de Costos");
+        btnReporteCostos.addActionListener(this::btnReporteCostosActionPerformed);
+
+        btnReporteBaterias.setText("Reporte de Drones con Bateria Baja");
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(78, 78, 78)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(156, 156, 156)
-                                .addComponent(btnReporteMisiones))
-                            .addGroup(jPanel4Layout.createSequentialGroup()
-                                .addGap(144, 144, 144)
-                                .addComponent(btnReporteDrones)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(txtConsolaReportes, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(78, Short.MAX_VALUE))
+                        .addGap(234, 234, 234)
+                        .addComponent(btnReporteMisiones))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(222, 222, 222)
+                        .addComponent(btnReporteDrones))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(237, 237, 237)
+                        .addComponent(btnReporteCostos))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(txtConsolaReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 467, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(192, 192, 192)
+                        .addComponent(btnReporteBaterias)))
+                .addContainerGap(81, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -426,8 +437,12 @@ public class VentanaOperador extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnReporteDrones)
                 .addGap(18, 18, 18)
+                .addComponent(btnReporteCostos)
+                .addGap(18, 18, 18)
+                .addComponent(btnReporteBaterias)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                 .addComponent(txtConsolaReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addGap(14, 14, 14))
         );
 
         jTabbedPane1.addTab("Reportes", jPanel4);
@@ -637,6 +652,10 @@ public class VentanaOperador extends javax.swing.JFrame {
         txtConsolaReportes.setText(sistema.generarReporteEstadoDrones());
     }//GEN-LAST:event_btnReporteDronesActionPerformed
 
+    private void btnReporteCostosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReporteCostosActionPerformed
+        txtConsolaReportes.setText(sistema.generarReporteCostosMantenimiento());
+    }//GEN-LAST:event_btnReporteCostosActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -666,6 +685,8 @@ public class VentanaOperador extends javax.swing.JFrame {
     private javax.swing.JButton btnCrearMision;
     private javax.swing.JButton btnFinalizarMision;
     private javax.swing.JButton btnRegistrarRuta;
+    private javax.swing.JButton btnReporteBaterias;
+    private javax.swing.JButton btnReporteCostos;
     private javax.swing.JButton btnReporteDrones;
     private javax.swing.JButton btnReporteMisiones;
     private javax.swing.JComboBox<String> cmbDronesDisponibles;
